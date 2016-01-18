@@ -1,0 +1,596 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C0739DF1C27A7AE001465B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0739DE1C27A7AE001465B2 /* AppDelegate.swift */; };
+		9C0739E11C27A7AE001465B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0739E01C27A7AE001465B2 /* ViewController.swift */; };
+		9C0739E41C27A7AE001465B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C0739E21C27A7AE001465B2 /* Main.storyboard */; };
+		9C0739E61C27A7AE001465B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C0739E51C27A7AE001465B2 /* Assets.xcassets */; };
+		9C0739E91C27A7AE001465B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C0739E71C27A7AE001465B2 /* LaunchScreen.storyboard */; };
+		9C0739F41C27A7AE001465B2 /* ZBeaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0739F31C27A7AE001465B2 /* ZBeaconTests.swift */; };
+		9C0739FF1C27A7AE001465B2 /* ZBeaconUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0739FE1C27A7AE001465B2 /* ZBeaconUITests.swift */; };
+		9CCC6E711C27BC8F00666F0B /* ZBeaconKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C073A361C27A7EC001465B2 /* ZBeaconKit.framework */; };
+		9CCC6E721C27BC8F00666F0B /* ZBeaconKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C073A361C27A7EC001465B2 /* ZBeaconKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9C0739F01C27A7AE001465B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C0739D31C27A7AD001465B2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C0739DA1C27A7AE001465B2;
+			remoteInfo = ZBeacon;
+		};
+		9C0739FB1C27A7AE001465B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C0739D31C27A7AD001465B2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C0739DA1C27A7AE001465B2;
+			remoteInfo = ZBeacon;
+		};
+		9C073A351C27A7EC001465B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C073A301C27A7EB001465B2 /* ZBeaconKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C073A161C27A7EB001465B2;
+			remoteInfo = ZBeaconKit;
+		};
+		9C073A371C27A7EC001465B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C073A301C27A7EB001465B2 /* ZBeaconKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C073A201C27A7EB001465B2;
+			remoteInfo = ZBeaconKitTests;
+		};
+		9CCC6E731C27BC8F00666F0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C073A301C27A7EB001465B2 /* ZBeaconKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C073A151C27A7EB001465B2;
+			remoteInfo = ZBeaconKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9CCC6E751C27BC8F00666F0B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9CCC6E721C27BC8F00666F0B /* ZBeaconKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9C0739DB1C27A7AE001465B2 /* ZBeacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZBeacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0739DE1C27A7AE001465B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9C0739E01C27A7AE001465B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9C0739E31C27A7AE001465B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9C0739E51C27A7AE001465B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9C0739E81C27A7AE001465B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9C0739EA1C27A7AE001465B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C0739EF1C27A7AE001465B2 /* ZBeaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZBeaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0739F31C27A7AE001465B2 /* ZBeaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZBeaconTests.swift; sourceTree = "<group>"; };
+		9C0739F51C27A7AE001465B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C0739FA1C27A7AE001465B2 /* ZBeaconUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZBeaconUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0739FE1C27A7AE001465B2 /* ZBeaconUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZBeaconUITests.swift; sourceTree = "<group>"; };
+		9C073A001C27A7AE001465B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C073A301C27A7EB001465B2 /* ZBeaconKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZBeaconKit.xcodeproj; path = ZBeaconKit/ZBeaconKit.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9C0739D81C27A7AE001465B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CCC6E711C27BC8F00666F0B /* ZBeaconKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0739EC1C27A7AE001465B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0739F71C27A7AE001465B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9C0739D21C27A7AD001465B2 = {
+			isa = PBXGroup;
+			children = (
+				9C073A301C27A7EB001465B2 /* ZBeaconKit.xcodeproj */,
+				9C0739DD1C27A7AE001465B2 /* ZBeacon */,
+				9C0739F21C27A7AE001465B2 /* ZBeaconTests */,
+				9C0739FD1C27A7AE001465B2 /* ZBeaconUITests */,
+				9C0739DC1C27A7AE001465B2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9C0739DC1C27A7AE001465B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C0739DB1C27A7AE001465B2 /* ZBeacon.app */,
+				9C0739EF1C27A7AE001465B2 /* ZBeaconTests.xctest */,
+				9C0739FA1C27A7AE001465B2 /* ZBeaconUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C0739DD1C27A7AE001465B2 /* ZBeacon */ = {
+			isa = PBXGroup;
+			children = (
+				9C0739DE1C27A7AE001465B2 /* AppDelegate.swift */,
+				9C0739E01C27A7AE001465B2 /* ViewController.swift */,
+				9C0739E21C27A7AE001465B2 /* Main.storyboard */,
+				9C0739E51C27A7AE001465B2 /* Assets.xcassets */,
+				9C0739E71C27A7AE001465B2 /* LaunchScreen.storyboard */,
+				9C0739EA1C27A7AE001465B2 /* Info.plist */,
+			);
+			path = ZBeacon;
+			sourceTree = "<group>";
+		};
+		9C0739F21C27A7AE001465B2 /* ZBeaconTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C0739F31C27A7AE001465B2 /* ZBeaconTests.swift */,
+				9C0739F51C27A7AE001465B2 /* Info.plist */,
+			);
+			path = ZBeaconTests;
+			sourceTree = "<group>";
+		};
+		9C0739FD1C27A7AE001465B2 /* ZBeaconUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9C0739FE1C27A7AE001465B2 /* ZBeaconUITests.swift */,
+				9C073A001C27A7AE001465B2 /* Info.plist */,
+			);
+			path = ZBeaconUITests;
+			sourceTree = "<group>";
+		};
+		9C073A311C27A7EB001465B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C073A361C27A7EC001465B2 /* ZBeaconKit.framework */,
+				9C073A381C27A7EC001465B2 /* ZBeaconKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9C0739DA1C27A7AE001465B2 /* ZBeacon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C073A031C27A7AE001465B2 /* Build configuration list for PBXNativeTarget "ZBeacon" */;
+			buildPhases = (
+				9C0739D71C27A7AE001465B2 /* Sources */,
+				9C0739D81C27A7AE001465B2 /* Frameworks */,
+				9C0739D91C27A7AE001465B2 /* Resources */,
+				9CCC6E751C27BC8F00666F0B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CCC6E741C27BC8F00666F0B /* PBXTargetDependency */,
+			);
+			name = ZBeacon;
+			productName = ZBeacon;
+			productReference = 9C0739DB1C27A7AE001465B2 /* ZBeacon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9C0739EE1C27A7AE001465B2 /* ZBeaconTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C073A061C27A7AE001465B2 /* Build configuration list for PBXNativeTarget "ZBeaconTests" */;
+			buildPhases = (
+				9C0739EB1C27A7AE001465B2 /* Sources */,
+				9C0739EC1C27A7AE001465B2 /* Frameworks */,
+				9C0739ED1C27A7AE001465B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C0739F11C27A7AE001465B2 /* PBXTargetDependency */,
+			);
+			name = ZBeaconTests;
+			productName = ZBeaconTests;
+			productReference = 9C0739EF1C27A7AE001465B2 /* ZBeaconTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9C0739F91C27A7AE001465B2 /* ZBeaconUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C073A091C27A7AE001465B2 /* Build configuration list for PBXNativeTarget "ZBeaconUITests" */;
+			buildPhases = (
+				9C0739F61C27A7AE001465B2 /* Sources */,
+				9C0739F71C27A7AE001465B2 /* Frameworks */,
+				9C0739F81C27A7AE001465B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C0739FC1C27A7AE001465B2 /* PBXTargetDependency */,
+			);
+			name = ZBeaconUITests;
+			productName = ZBeaconUITests;
+			productReference = 9C0739FA1C27A7AE001465B2 /* ZBeaconUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C0739D31C27A7AD001465B2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = ZOYI;
+				TargetAttributes = {
+					9C0739DA1C27A7AE001465B2 = {
+						CreatedOnToolsVersion = 7.2;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
+					};
+					9C0739EE1C27A7AE001465B2 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 9C0739DA1C27A7AE001465B2;
+					};
+					9C0739F91C27A7AE001465B2 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 9C0739DA1C27A7AE001465B2;
+					};
+				};
+			};
+			buildConfigurationList = 9C0739D61C27A7AD001465B2 /* Build configuration list for PBXProject "ZBeacon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9C0739D21C27A7AD001465B2;
+			productRefGroup = 9C0739DC1C27A7AE001465B2 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9C073A311C27A7EB001465B2 /* Products */;
+					ProjectRef = 9C073A301C27A7EB001465B2 /* ZBeaconKit.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				9C0739DA1C27A7AE001465B2 /* ZBeacon */,
+				9C0739EE1C27A7AE001465B2 /* ZBeaconTests */,
+				9C0739F91C27A7AE001465B2 /* ZBeaconUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9C073A361C27A7EC001465B2 /* ZBeaconKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ZBeaconKit.framework;
+			remoteRef = 9C073A351C27A7EC001465B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9C073A381C27A7EC001465B2 /* ZBeaconKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ZBeaconKitTests.xctest;
+			remoteRef = 9C073A371C27A7EC001465B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9C0739D91C27A7AE001465B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0739E91C27A7AE001465B2 /* LaunchScreen.storyboard in Resources */,
+				9C0739E61C27A7AE001465B2 /* Assets.xcassets in Resources */,
+				9C0739E41C27A7AE001465B2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0739ED1C27A7AE001465B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0739F81C27A7AE001465B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9C0739D71C27A7AE001465B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0739E11C27A7AE001465B2 /* ViewController.swift in Sources */,
+				9C0739DF1C27A7AE001465B2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0739EB1C27A7AE001465B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0739F41C27A7AE001465B2 /* ZBeaconTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C0739F61C27A7AE001465B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C0739FF1C27A7AE001465B2 /* ZBeaconUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9C0739F11C27A7AE001465B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9C0739DA1C27A7AE001465B2 /* ZBeacon */;
+			targetProxy = 9C0739F01C27A7AE001465B2 /* PBXContainerItemProxy */;
+		};
+		9C0739FC1C27A7AE001465B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9C0739DA1C27A7AE001465B2 /* ZBeacon */;
+			targetProxy = 9C0739FB1C27A7AE001465B2 /* PBXContainerItemProxy */;
+		};
+		9CCC6E741C27BC8F00666F0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZBeaconKit;
+			targetProxy = 9CCC6E731C27BC8F00666F0B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9C0739E21C27A7AE001465B2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C0739E31C27A7AE001465B2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9C0739E71C27A7AE001465B2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C0739E81C27A7AE001465B2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9C073A011C27A7AE001465B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9C073A021C27A7AE001465B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9C073A041C27A7AE001465B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = ZBeacon/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9C073A051C27A7AE001465B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = ZBeacon/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9C073A071C27A7AE001465B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ZBeaconTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZBeacon.app/ZBeacon";
+			};
+			name = Debug;
+		};
+		9C073A081C27A7AE001465B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ZBeaconTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZBeacon.app/ZBeacon";
+			};
+			name = Release;
+		};
+		9C073A0A1C27A7AE001465B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ZBeaconUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ZBeacon;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		9C073A0B1C27A7AE001465B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ZBeaconUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ZBeacon;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9C0739D61C27A7AD001465B2 /* Build configuration list for PBXProject "ZBeacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C073A011C27A7AE001465B2 /* Debug */,
+				9C073A021C27A7AE001465B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C073A031C27A7AE001465B2 /* Build configuration list for PBXNativeTarget "ZBeacon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C073A041C27A7AE001465B2 /* Debug */,
+				9C073A051C27A7AE001465B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C073A061C27A7AE001465B2 /* Build configuration list for PBXNativeTarget "ZBeaconTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C073A071C27A7AE001465B2 /* Debug */,
+				9C073A081C27A7AE001465B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C073A091C27A7AE001465B2 /* Build configuration list for PBXNativeTarget "ZBeaconUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C073A0A1C27A7AE001465B2 /* Debug */,
+				9C073A0B1C27A7AE001465B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9C0739D31C27A7AD001465B2 /* Project object */;
+}
