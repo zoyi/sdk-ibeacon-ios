@@ -71,7 +71,11 @@ final class RangingService: LocationService {
     case .Denied, .Restricted:
       dlog("Could not turn on ranging: require location access missing")
     case .NotDetermined:
-      locationManager.requestWhenInUseAuthorization()
+      if #available(iOS 8.0, *) {
+          locationManager.requestWhenInUseAuthorization()
+      } else {
+          // Fallback on earlier versions
+      }
     }
   }
 

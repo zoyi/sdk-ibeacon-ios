@@ -1,0 +1,10 @@
+framework module ZBeaconKit {
+  umbrella header "ZBeaconKit.h"
+
+  export *
+  module * { export * }
+}
+
+module ZBeaconKit.Swift {
+    header "ZBeaconKit-Swift.h"
+}
