@@ -38,6 +38,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
   static let systemInfo = UIDevice.currentDevice().systemInfo
 
   private var authHeader: [String: String]
+  private let brandId: Int
 
   var monitoringServices = [GeneralMonitoringService]()
 
@@ -46,6 +47,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
       "X-User-Email" : email,
       "X-User-Token" : token
     ]
+    self.brandId = brandId
     super.init()
     // http://www.touch-code-magazine.com/cllocationmanager-and-thread-safety/
     // Location manager must be created on main thread
@@ -53,21 +55,29 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
       let outRegion = self.getMonitoringRegion(withUUID: NSUUID(UUIDString: Manager.defaultOutUUIDString)!, identifier: "ZBEACON-OUT")
       self.monitoringServices.append(GeneralMonitoringService(region: outRegion, delegate: self)) // OUT
     })
+
+  }
+
+  public func start() {
     startMonitoring()
     startBrandOutRegion(withBrandId: brandId)
   }
 
+  public func stop() {
+    stopMonitoring()
+  }
 
-  public func startMonitoring() {
+  private func startMonitoring() {
     dlog("Totoal \(monitoringServices.count) monitoring services")
     monitoringServices.forEach({$0.startMonitoring()})
   }
 
-  public func stopMonitoring() {
+  private func stopMonitoring() {
+    dlog("Totoal \(monitoringServices.count) monitoring services stop")
     monitoringServices.forEach({$0.stopMonitoring()})
   }
 
-  public func restartMonitoring() {
+  private func restartMonitoring() {
     self.stopMonitoring()
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))),
