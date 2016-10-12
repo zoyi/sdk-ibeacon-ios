@@ -19,10 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
     Manager.debugMode = true
+    Manager.customerId = self.generateSampleCustomerId()
     manager.start()
-    print(Manager.uuid)
+    print(Manager.customerId)
     print(Manager.packageId)
     return true
+  }
+
+  private func generateSampleCustomerId() -> String {
+    let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString
+    let deviceIdWithSalt = deviceId! + "YOUR_SALT"
+    return deviceIdWithSalt.hmac(.SHA512, key: "YOUR_KEY_FOR_HMAC")
   }
 
   func applicationWillResignActive(application: UIApplication) {

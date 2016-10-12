@@ -28,7 +28,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
   public static var debugMode = false
 
   public static let packageId = NSBundle.mainBundle().bundleIdentifier;
-  public static let uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
+  public static var customerId: String? = nil
 
   static let apiEndpoint = "https://api.walkinsights.com/api/v1/brands"
   static let dataEndpoint = "https://dropwizard.walkinsights.com/api/v1/ibeacon_signals"
@@ -59,6 +59,9 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
   }
 
   public func start() {
+    if Manager.customerId != nil {
+      dlog("you should set customer id")
+    }
     startMonitoring()
     startBrandOutRegion(withBrandId: brandId)
   }
@@ -133,10 +136,14 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
     minor: NSNumber?,
     rssi: Int?)
   {
+    guard let customerId = Manager.customerId else {
+      dlog("Did not send event because no customer id")
+      return
+    }
     guard major != nil else { return }
     let params: [String: AnyObject] = [
       "package_id": Manager.packageId ?? "",
-      "ios_id" : Manager.uuid!,
+      "customer_id" : customerId,
       "event": type.rawValue,
 
       "ibeacon_uuid": uuid,
@@ -144,7 +151,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
       "minor": minor?.integerValue ?? NSNull(),
       "rssi" : rssi ?? NSNull(),
 
-      "os": Manager.systemInfo,
+      "os": "ios",
       "device": Manager.model,
       "ts": NSDate().millisecondsIntervalSince1970,
     ]

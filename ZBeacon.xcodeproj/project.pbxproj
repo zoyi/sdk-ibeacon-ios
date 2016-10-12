@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		149411051DAE12640031CD5C /* HMACAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149411041DAE12640031CD5C /* HMACAlgorithm.swift */; };
 		9C0739DF1C27A7AE001465B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0739DE1C27A7AE001465B2 /* AppDelegate.swift */; };
 		9C0739E11C27A7AE001465B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0739E01C27A7AE001465B2 /* ViewController.swift */; };
 		9C0739E41C27A7AE001465B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C0739E21C27A7AE001465B2 /* Main.storyboard */; };
@@ -71,6 +72,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		149411031DAE118F0031CD5C /* ZBeacon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZBeacon-Bridging-Header.h"; sourceTree = "<group>"; };
+		149411041DAE12640031CD5C /* HMACAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACAlgorithm.swift; sourceTree = "<group>"; };
 		9C0739DB1C27A7AE001465B2 /* ZBeacon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZBeacon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0739DE1C27A7AE001465B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0739E01C27A7AE001465B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 				9C0739E51C27A7AE001465B2 /* Assets.xcassets */,
 				9C0739E71C27A7AE001465B2 /* LaunchScreen.storyboard */,
 				9C0739EA1C27A7AE001465B2 /* Info.plist */,
+				149411031DAE118F0031CD5C /* ZBeacon-Bridging-Header.h */,
+				149411041DAE12640031CD5C /* HMACAlgorithm.swift */,
 			);
 			path = ZBeacon;
 			sourceTree = "<group>";
@@ -244,6 +249,8 @@
 				TargetAttributes = {
 					9C0739DA1C27A7AE001465B2 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8278Q64QFC;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -252,10 +259,14 @@
 					};
 					9C0739EE1C27A7AE001465B2 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8278Q64QFC;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9C0739DA1C27A7AE001465B2;
 					};
 					9C0739F91C27A7AE001465B2 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8278Q64QFC;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9C0739DA1C27A7AE001465B2;
 					};
 				};
@@ -336,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C0739E11C27A7AE001465B2 /* ViewController.swift in Sources */,
+				149411051DAE12640031CD5C /* HMACAlgorithm.swift in Sources */,
 				9C0739DF1C27A7AE001465B2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,12 +493,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ZBeacon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ZBeacon/ZBeacon-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -494,12 +510,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ZBeacon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ZBeacon/ZBeacon-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -507,10 +527,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZBeacon.app/ZBeacon";
 			};
 			name = Debug;
@@ -519,10 +541,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZBeacon.app/ZBeacon";
 			};
 			name = Release;
@@ -530,10 +554,12 @@
 		9C073A0A1C27A7AE001465B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = ZBeacon;
 				USES_XCTRUNNER = YES;
 			};
@@ -542,10 +568,12 @@
 		9C073A0B1C27A7AE001465B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = ZBeacon;
 				USES_XCTRUNNER = YES;
 			};
