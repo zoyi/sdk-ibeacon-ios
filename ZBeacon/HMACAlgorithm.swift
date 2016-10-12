@@ -55,9 +55,9 @@ extension String {
     let cKey = key.cStringUsingEncoding(NSUTF8StringEncoding)
     let cData = self.cStringUsingEncoding(NSUTF8StringEncoding)
     var result = [CUnsignedChar](count: Int(algorithm.digestLength()), repeatedValue: 0)
-    CCHmac(algorithm.toCCHmacAlgorithm(), cKey!, strlen(cKey!), cData!, strlen(cData!), &result)
-    var hmacData:NSData = NSData(bytes: result, length: (Int(algorithm.digestLength())))
-    var hmacBase64 = hmacData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding76CharacterLineLength)
+    CCHmac(algorithm.toCCHmacAlgorithm(), cKey!, Int(strlen(cKey!)), cData!, Int(strlen(cData!)), &result)
+    let hmacData:NSData = NSData(bytes: result, length: (Int(algorithm.digestLength())))
+    let hmacBase64 = hmacData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding76CharacterLineLength)
     return String(hmacBase64)
   }
 }
