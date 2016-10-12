@@ -19,8 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
     Manager.debugMode = true
+    Manager.customerId = "YOUR_CUSTOMER_ID"
     manager.start()
-    print(Manager.uuid)
+    print(Manager.customerId)
     print(Manager.packageId)
     return true
   }
