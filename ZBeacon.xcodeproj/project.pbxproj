@@ -244,6 +244,8 @@
 				TargetAttributes = {
 					9C0739DA1C27A7AE001465B2 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8278Q64QFC;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -252,10 +254,14 @@
 					};
 					9C0739EE1C27A7AE001465B2 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8278Q64QFC;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9C0739DA1C27A7AE001465B2;
 					};
 					9C0739F91C27A7AE001465B2 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8278Q64QFC;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9C0739DA1C27A7AE001465B2;
 					};
 				};
@@ -481,12 +487,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ZBeacon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -494,12 +502,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ZBeacon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -507,10 +517,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZBeacon.app/ZBeacon";
 			};
 			name = Debug;
@@ -519,10 +531,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZBeacon.app/ZBeacon";
 			};
 			name = Release;
@@ -530,10 +544,12 @@
 		9C073A0A1C27A7AE001465B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = ZBeacon;
 				USES_XCTRUNNER = YES;
 			};
@@ -542,10 +558,12 @@
 		9C073A0B1C27A7AE001465B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 8278Q64QFC;
 				INFOPLIST_FILE = ZBeaconUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeaconUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = ZBeacon;
 				USES_XCTRUNNER = YES;
 			};
