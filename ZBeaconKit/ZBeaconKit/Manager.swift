@@ -59,7 +59,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
   }
 
   public func start() {
-    if Manager.customerId != nil {
+    if Manager.customerId == nil {
       dlog("you should set customer id")
     }
     startMonitoring()
