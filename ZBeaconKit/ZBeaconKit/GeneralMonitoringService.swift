@@ -65,11 +65,7 @@ final class GeneralMonitoringService: LocationService, RangingServiceDelegate {
       dlog("Couldn't turn on monitoring: Required Location Access (Always) missing.")
     case .NotDetermined:
       dlog("About to request location authorization.")
-      if #available(iOS 8.0, *) {
-          locationManager.requestAlwaysAuthorization()
-      } else {
-          // Fallback on earlier versions
-      }
+      locationManager.requestAlwaysAuthorization()
     }
   }
 

@@ -496,9 +496,9 @@
 				DEVELOPMENT_TEAM = 8278Q64QFC;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ZBeacon/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoyi.ZBeacon.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZBeacon/ZBeacon-Bridging-Header.h";
@@ -513,9 +513,9 @@
 				DEVELOPMENT_TEAM = 8278Q64QFC;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = ZBeacon/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.zoyi.ZBeacon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoyi.ZBeacon.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZBeacon/ZBeacon-Bridging-Header.h";
