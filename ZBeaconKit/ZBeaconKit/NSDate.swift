@@ -9,7 +9,7 @@
 import Foundation
 
 extension NSDate {
-  var millisecondsIntervalSince1970: Double {
-    return self.timeIntervalSince1970 * 1000;
+  var microsecondsIntervalSince1970: UInt64 {
+    return UInt64(self.timeIntervalSince1970 * 1000 * 1000);
   }
 }

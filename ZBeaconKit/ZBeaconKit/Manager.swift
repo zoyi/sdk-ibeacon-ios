@@ -55,7 +55,6 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
       let outRegion = self.getMonitoringRegion(withUUID: NSUUID(UUIDString: Manager.defaultOutUUIDString)!, identifier: "ZBEACON-OUT")
       self.monitoringServices.append(GeneralMonitoringService(region: outRegion, delegate: self)) // OUT
     })
-
   }
 
   public func start() {
@@ -153,9 +152,8 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
 
       "os": "ios",
       "device": Manager.model,
-      "ts": NSDate().millisecondsIntervalSince1970,
+      "ts": "\(NSDate().microsecondsIntervalSince1970)",
     ]
-
     do {
       let opt = try HTTP.POST(Manager.dataEndpoint,
                               parameters: params,
@@ -180,7 +178,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
     guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
-    dlog("About to send server for ENTER service: \(service), with beacon: \(beacon), for reigon: \(region), on \(NSDate().millisecondsIntervalSince1970)")
+    dlog("About to send server for ENTER service: \(service), with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
     sendEvent(.Enter, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
   }
 
@@ -189,7 +187,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
     guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
-    dlog("About to send server for EXIT service: \(service), with beacon: \(beacon), for reigon: \(region), on \(NSDate().millisecondsIntervalSince1970)")
+    dlog("About to send server for EXIT service: \(service), with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
     sendEvent(.Exit, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
   }
 }
