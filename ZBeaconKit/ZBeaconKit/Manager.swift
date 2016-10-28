@@ -32,7 +32,6 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
 
   static let apiEndpoint = "https://api.walkinsights.com/api/v1/brands"
   static let dataEndpoint = "https://dropwizard.walkinsights.com/api/v1/ibeacon_signals"
-  static let defaultOutUUIDString = "345C237F-65DC-4928-8595-1E955561F695"
 
   static let model = UIDevice.currentDevice().modelName
   static let systemInfo = UIDevice.currentDevice().systemInfo
@@ -49,12 +48,6 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
     ]
     self.brandId = brandId
     super.init()
-    // http://www.touch-code-magazine.com/cllocationmanager-and-thread-safety/
-    // Location manager must be created on main thread
-    dispatch_async(dispatch_get_main_queue(), { [unowned self] _ in
-      let outRegion = self.getMonitoringRegion(withUUID: NSUUID(UUIDString: Manager.defaultOutUUIDString)!, identifier: "ZBEACON-OUT")
-      self.monitoringServices.append(GeneralMonitoringService(region: outRegion, delegate: self)) // OUT
-    })
   }
 
   public func start() {
@@ -154,6 +147,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
       "device": Manager.model,
       "ts": "\(NSDate().microsecondsIntervalSince1970)",
     ]
+
     do {
       let opt = try HTTP.POST(Manager.dataEndpoint,
                               parameters: params,
