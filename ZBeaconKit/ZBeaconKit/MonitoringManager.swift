@@ -1,0 +1,114 @@
+//
+//  MonitoringManager.swift
+//  ZBeaconKit
+//
+//  Created by 이수완 on 2016. 10. 31..
+//  Copyright © 2016년 ZOYI. All rights reserved.
+//
+
+import Foundation
+import CoreLocation
+
+protocol MonitoringManagerDelegate: class {
+  func didEnterBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion)
+  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion)
+}
+
+class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
+
+  var beaconRegion: CLBeaconRegion!
+  var specificBeaconRegion: CLBeaconRegion?
+  let rangingService = RangingService()
+  let monitoringService = MonitoringService()
+  weak var delegate: MonitoringManagerDelegate?
+
+  // MARK: - Constructors
+
+  init(region: CLBeaconRegion, delegate: MonitoringManagerDelegate? = nil) {
+    precondition(region.major == nil)
+    precondition(region.minor == nil)
+    self.beaconRegion = region
+    self.delegate = delegate
+    self.rangingService.delegate = self
+    self.monitoringService.delegate = self
+  }
+
+  // MARK: - Monitoring Manager methods
+
+  func startMonitoring() {
+    self.startGeneralMonitoring()
+  }
+
+  // MARK: - General Monitoring methods
+
+  private func startGeneralMonitoring() {
+    dlog("Start general monitoring")
+    self.monitoringService.startMonitoring(withRegion: self.beaconRegion)
+  }
+
+  private func stopGeneralMonitoring() {
+    dlog("Stop general monitoring")
+    self.monitoringService.locationManager.stopMonitoringForRegion(self.beaconRegion)
+  }
+
+  // MARK: - Specific Monitoring methods
+
+  private func startSpecificMonitoring(withBeacon beacon: CLBeacon) {
+    guard beacon.proximityUUID.UUIDString == beaconRegion.proximityUUID.UUIDString else { return }
+    dlog("Start specific monitoring")
+    let specificRegion = CLBeaconRegion(proximityUUID: beacon.proximityUUID,
+                                        major: CLBeaconMajorValue(beacon.major.integerValue),
+                                        minor: CLBeaconMinorValue(beacon.minor.integerValue),
+                                        identifier: beaconRegion.identifier + "-SPECIFIC")
+    specificRegion.notifyEntryStateOnDisplay = true
+    self.specificBeaconRegion = specificRegion
+    self.monitoringService.startMonitoring(withRegion: specificRegion)
+  }
+
+  private func stopSpecificMonitoring() {
+    guard let region = self.specificBeaconRegion else { return }
+    dlog("Stop specific monitoring")
+    self.monitoringService.locationManager.stopMonitoringForRegion(region)
+  }
+
+  // MARK: - Ranging methods
+
+  private func startRanging() {
+    self.rangingService.region = CLBeaconRegion(proximityUUID: beaconRegion.proximityUUID, identifier: beaconRegion.identifier)
+  }
+
+  private func stopRanging() {
+    self.rangingService.stopRanging()
+  }
+
+  // MARK: - Monitoring Service delegate methods
+
+  func didEnterRegion(region: CLBeaconRegion) {
+    if region.major == nil && region.minor == nil {
+      dlog("did enter general region")
+      self.stopGeneralMonitoring()
+      self.startRanging()
+    } else {
+      dlog("did enter specific region")
+    }
+  }
+
+  func didExitRegion(region: CLBeaconRegion) {
+    if region.major == nil && region.minor == nil {
+      dlog("did exit general region")
+    } else {
+      dlog("did exit specific region")
+      self.stopSpecificMonitoring()
+      self.delegate?.didExitBeaconRegion(nil, forReigon: region)
+      self.startGeneralMonitoring()
+    }
+  }
+
+  // MARK: - Ranging Service delegate methods
+
+  func didRangeBeacon(beacon: CLBeacon, forRegion region: CLBeaconRegion) {
+    self.stopRanging()
+    self.delegate?.didEnterBeaconRegion(beacon, forReigon: region)
+    self.startSpecificMonitoring(withBeacon: beacon)
+  }
+}

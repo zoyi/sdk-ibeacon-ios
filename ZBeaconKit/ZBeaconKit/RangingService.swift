@@ -9,10 +9,7 @@
 import Foundation
 import CoreLocation
 
-@objc protocol RangingServiceDelegate: class {
-  optional func didStartRanging(forReigon region: CLBeaconRegion)
-  optional func didStopRanging(forReigon region: CLBeaconRegion)
-  optional func didFailToStartRanging(forReigon region: CLBeaconRegion)
+protocol RangingServiceDelegate: class {
   func didRangeBeacon(beacon: CLBeacon, forRegion region: CLBeaconRegion)
 }
 
@@ -49,19 +46,16 @@ final class RangingService: LocationService {
 
     guard CLLocationManager.locationServicesEnabled() else {
       dlog("Location Service is disabled")
-      delegate?.didFailToStartRanging?(forReigon: region)
       return
     }
 
     guard CLLocationManager.isRangingAvailable() else {
       dlog("Turn on ranging: ranging is not available")
-      delegate?.didFailToStartRanging?(forReigon: region)
       return
     }
 
     guard locationManager.rangedRegions.isEmpty else {
       dlog("Turn on ranging: ranging is already on")
-      delegate?.didFailToStartRanging?(forReigon: region)
       return
     }
 
@@ -77,14 +71,12 @@ final class RangingService: LocationService {
 
   func turnOnRanging() {
     locationManager.startRangingBeaconsInRegion(region)
-    delegate?.didStartRanging?(forReigon: region)
     dlog("About to start ranging: \(region)")
   }
 
   func stopRanging() {
     locationManager.stopRangingBeaconsInRegion(region)
     inactiveLocationManager()
-    delegate?.didStopRanging?(forReigon: region)
     dlog("Turn off ranging for regin: \(region)")
   }
 
@@ -97,6 +89,7 @@ final class RangingService: LocationService {
     guard manager.isEqual(locationManager) else { return}
     for beacon in beacons {
       if beacon.rssi < 0 && beacon.proximityUUID.UUIDString == region.proximityUUID.UUIDString {
+        dlog("did range beacon: \(beacon), for region: \(region)")
         delegate?.didRangeBeacon(beacon, forRegion: region)
         return
       }

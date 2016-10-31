@@ -7,23 +7,21 @@
 //
 
 import Foundation
+import UIKit
 import CoreLocation
 
 func dlog<T>(@autoclosure object:  () -> T) {
   guard Manager.debugMode else { return }
-  print("[ZBeaconKit]: \(object())\n", terminator: "")
+  print("[ZBeaconKit]: \(object())\n\n", terminator: "")
+  NSNotificationCenter.defaultCenter().postNotificationName("ZBeaconSendDebugNotification", object: "\(object())")
 }
-
-//public protocol ZBeaconManagerDelegate {
-//  
-//}
 
 enum IBeaconRegionEvent: String {
   case Enter = "enter"
   case Exit = "leave"
 }
 
-public final class Manager: NSObject, MonitoringServiceDelegate {
+public final class Manager: NSObject, MonitoringManagerDelegate {
 
   public static var debugMode = false
 
@@ -35,11 +33,12 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
 
   static let model = UIDevice.currentDevice().modelName
   static let systemInfo = UIDevice.currentDevice().systemInfo
+  static let sdkVersion = 1
 
   private var authHeader: [String: String]
   private let brandId: Int
 
-  var monitoringServices = [GeneralMonitoringService]()
+  var monitoringManager: MonitoringManager? = nil
 
   public init(email: String, authToken token: String, brandId: Int) {
     self.authHeader = [
@@ -54,31 +53,7 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
     if Manager.customerId == nil {
       dlog("you should set customer id")
     }
-    startMonitoring()
-    startBrandOutRegion(withBrandId: brandId)
-  }
-
-  public func stop() {
-    stopMonitoring()
-  }
-
-  private func startMonitoring() {
-    dlog("Totoal \(monitoringServices.count) monitoring services")
-    monitoringServices.forEach({$0.startMonitoring()})
-  }
-
-  private func stopMonitoring() {
-    dlog("Totoal \(monitoringServices.count) monitoring services stop")
-    monitoringServices.forEach({$0.stopMonitoring()})
-  }
-
-  private func restartMonitoring() {
-    self.stopMonitoring()
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))),
-      dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] _ in
-        self.startMonitoring()
-    }
+    self.startBrandOutRegion(withBrandId: brandId)
   }
 
   private func getMonitoringRegion(withUUID uuid: NSUUID, identifier: String) -> CLBeaconRegion {
@@ -109,14 +84,13 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
         dispatch_async(dispatch_get_main_queue(), { [unowned self] _ in
           if let brandOutUUIDString = brandOutUUIDString {
             let brandOutRegion = self.getMonitoringRegion(withUUID: NSUUID(UUIDString: brandOutUUIDString)!, identifier: "ZBEACON-" + brandOutUUIDString)
-            self.monitoringServices.append(GeneralMonitoringService(region: brandOutRegion, delegate: self))
+            self.monitoringManager = MonitoringManager(region: brandOutRegion, delegate: self)
+            self.monitoringManager?.startMonitoring()
           }
-          self.restartMonitoring()
         })
-        dlog("brand out self: \(self), uuid: \(brandOutUUIDString), monitoringService count: \(self.monitoringServices.map{$0})")
+        dlog("brand out self: \(self), uuid: \(brandOutUUIDString)")
       })
     } catch {
-      self.restartMonitoring()
       dlog("Error on create fetch brand out region: \(error)")
     }
   }
@@ -146,9 +120,12 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
       "os": "ios",
       "device": Manager.model,
       "ts": "\(NSDate().microsecondsIntervalSince1970)",
+
+      "sdk_version": Manager.sdkVersion
     ]
 
     do {
+      dlog("Try to send event with params: \(params)")
       let opt = try HTTP.POST(Manager.dataEndpoint,
                               parameters: params,
                               headers: self.authHeader,
@@ -166,22 +143,23 @@ public final class Manager: NSObject, MonitoringServiceDelegate {
     }
   }
 
-  // MARK: - Monitoring Service delegate
-  func didEnterBeaconRegion(service: GeneralMonitoringService, beacon: CLBeacon?, forReigon region: CLRegion) {
+  // MARK: - Monitoring Manager delegate
+
+  func didEnterBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion) {
     guard let region = region as? CLBeaconRegion else { return }
     guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
-    dlog("About to send server for ENTER service: \(service), with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
+    dlog("About to send server for ENTER with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
     sendEvent(.Enter, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
   }
 
-  func didExitBeaconRegion(service: GeneralMonitoringService, beacon: CLBeacon?, forReigon region: CLRegion) {
+  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion) {
     guard let region = region as? CLBeaconRegion else { return }
     guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
-    dlog("About to send server for EXIT service: \(service), with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
+    dlog("About to send server for EXIT with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
     sendEvent(.Exit, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
   }
 }

@@ -12,17 +12,17 @@ import ZBeaconKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 1)
+//  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 69)
 
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
-    Manager.debugMode = true
-    Manager.customerId = self.generateSampleCustomerId()
-    manager.start()
-    print(Manager.customerId)
-    print(Manager.packageId)
+//    Manager.debugMode = true
+//    Manager.customerId = self.generateSampleCustomerId()
+//    manager.start()
+//    print(Manager.customerId)
+//    print(Manager.packageId)
     return true
   }
 
@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationDidEnterBackground(application: UIApplication) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    manager.stop()
   }
 
   func applicationWillEnterForeground(application: UIApplication) {

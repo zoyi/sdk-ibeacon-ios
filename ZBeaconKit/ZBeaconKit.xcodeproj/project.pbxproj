@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		141280D61DC6D93300C9203C /* MonitoringManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141280D51DC6D93300C9203C /* MonitoringManager.swift */; };
+		14AD0ADF1DC724320023B248 /* MonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AD0ADE1DC724310023B248 /* MonitoringService.swift */; };
 		9C073A1A1C27A7EB001465B2 /* ZBeaconKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C073A191C27A7EB001465B2 /* ZBeaconKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9C073A211C27A7EB001465B2 /* ZBeaconKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C073A161C27A7EB001465B2 /* ZBeaconKit.framework */; };
 		9C073A261C27A7EB001465B2 /* ZBeaconKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C073A251C27A7EB001465B2 /* ZBeaconKitTests.swift */; };
 		9C073A3A1C27A812001465B2 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C073A391C27A812001465B2 /* Manager.swift */; };
 		9C073A3F1C27A896001465B2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C073A3E1C27A896001465B2 /* CoreLocation.framework */; };
-		9C073A411C27A8A0001465B2 /* MonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C073A401C27A8A0001465B2 /* MonitoringService.swift */; };
-		9C09924F1C3D2F0000F0BF68 /* GeneralMonitoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C09924E1C3D2F0000F0BF68 /* GeneralMonitoringService.swift */; };
 		9C65CB7D1C3E588F00C65D15 /* CLRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C65CB7C1C3E588F00C65D15 /* CLRegion.swift */; };
 		9CCC6E771C27DBB500666F0B /* RangingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC6E761C27DBB500666F0B /* RangingService.swift */; };
 		9CCC6E791C27DBFD00666F0B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC6E781C27DBFD00666F0B /* LocationService.swift */; };
@@ -40,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		141280D51DC6D93300C9203C /* MonitoringManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitoringManager.swift; sourceTree = "<group>"; };
+		14AD0ADE1DC724310023B248 /* MonitoringService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitoringService.swift; sourceTree = "<group>"; };
 		9C073A161C27A7EB001465B2 /* ZBeaconKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZBeaconKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C073A191C27A7EB001465B2 /* ZBeaconKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZBeaconKit.h; sourceTree = "<group>"; };
 		9C073A1B1C27A7EB001465B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,8 +50,6 @@
 		9C073A271C27A7EB001465B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C073A391C27A812001465B2 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Manager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9C073A3E1C27A896001465B2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		9C073A401C27A8A0001465B2 /* MonitoringService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MonitoringService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9C09924E1C3D2F0000F0BF68 /* GeneralMonitoringService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GeneralMonitoringService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9C65CB7C1C3E588F00C65D15 /* CLRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLRegion.swift; sourceTree = "<group>"; };
 		9CCC6E761C27DBB500666F0B /* RangingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RangingService.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9CCC6E781C27DBFD00666F0B /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -129,20 +129,12 @@
 		9C073A3B1C27A862001465B2 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				141280D51DC6D93300C9203C /* MonitoringManager.swift */,
 				9CCC6E781C27DBFD00666F0B /* LocationService.swift */,
-				9C09924D1C3D2ED500F0BF68 /* Monitoring */,
-				9CE5E38E1C3F57BD001A8E02 /* Ranging */,
+				14AD0ADE1DC724310023B248 /* MonitoringService.swift */,
+				9CCC6E761C27DBB500666F0B /* RangingService.swift */,
 			);
 			name = Services;
-			sourceTree = "<group>";
-		};
-		9C09924D1C3D2ED500F0BF68 /* Monitoring */ = {
-			isa = PBXGroup;
-			children = (
-				9C073A401C27A8A0001465B2 /* MonitoringService.swift */,
-				9C09924E1C3D2F0000F0BF68 /* GeneralMonitoringService.swift */,
-			);
-			name = Monitoring;
 			sourceTree = "<group>";
 		};
 		9CCC6E7A1C27E19600666F0B /* Extension */ = {
@@ -168,14 +160,6 @@
 				9CCC6E841C28059900666F0B /* Upload.swift */,
 			);
 			name = SwiftHTTP;
-			sourceTree = "<group>";
-		};
-		9CE5E38E1C3F57BD001A8E02 /* Ranging */ = {
-			isa = PBXGroup;
-			children = (
-				9CCC6E761C27DBB500666F0B /* RangingService.swift */,
-			);
-			name = Ranging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,16 +273,16 @@
 			files = (
 				9CCC6E7E1C27E94D00666F0B /* CLBeaconRegion.swift in Sources */,
 				9CD766471C35014E00586A82 /* NSNumber.swift in Sources */,
-				9C073A411C27A8A0001465B2 /* MonitoringService.swift in Sources */,
 				9C65CB7D1C3E588F00C65D15 /* CLRegion.swift in Sources */,
 				9CCC6E851C28059900666F0B /* HTTPSecurity.swift in Sources */,
 				9CCC6E861C28059900666F0B /* Operation.swift in Sources */,
 				9CCC6E771C27DBB500666F0B /* RangingService.swift in Sources */,
+				141280D61DC6D93300C9203C /* MonitoringManager.swift in Sources */,
 				9CE5E3921C3F82E8001A8E02 /* UIDevice.swift in Sources */,
-				9C09924F1C3D2F0000F0BF68 /* GeneralMonitoringService.swift in Sources */,
 				9CCC6E891C28059900666F0B /* Upload.swift in Sources */,
 				9CCC6E7C1C27E1B700666F0B /* CLBeacon.swift in Sources */,
 				9CCC6E881C28059900666F0B /* StatusCode.swift in Sources */,
+				14AD0ADF1DC724320023B248 /* MonitoringService.swift in Sources */,
 				9CCC6E791C27DBFD00666F0B /* LocationService.swift in Sources */,
 				9CCC6E871C28059900666F0B /* Request.swift in Sources */,
 				9CD766451C34FE8A00586A82 /* NSDate.swift in Sources */,

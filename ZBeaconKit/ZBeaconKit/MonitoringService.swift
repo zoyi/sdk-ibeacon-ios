@@ -2,45 +2,46 @@
 //  MonitoringService.swift
 //  ZBeaconKit
 //
-//  Created by Di Wu on 12/21/15.
-//  Copyright © 2015 ZOYI. All rights reserved.
+//  Created by 이수완 on 2016. 10. 31..
+//  Copyright © 2016년 ZOYI. All rights reserved.
 //
 
 import Foundation
 import CoreLocation
 
+protocol MonitoringServiceDelegate: class {
+  func didEnterRegion(region: CLBeaconRegion)
+  func didExitRegion(region: CLBeaconRegion)
+}
+
 final class MonitoringService: LocationService {
 
-  var beaconRegion: CLBeaconRegion!
+  var beaconRegion: CLBeaconRegion?
+  weak var delegate: MonitoringServiceDelegate?
 
-  weak var generalMonitoringService: GeneralMonitoringService?
-
-  // MARK: - Constructors
-  init(region: CLBeaconRegion, generalMonitoringService: GeneralMonitoringService? = nil) {
+  override init() {
     super.init()
-    self.beaconRegion = region
-    self.generalMonitoringService = generalMonitoringService
-  }
-
-  deinit {
-    stopMonitoring()
+    self.activeLocationManager()
+    self.prepareMonitoring()
   }
 
   // MARK: - Help methods
 
   func isResponsibleFor(region: CLRegion, manager: CLLocationManager) -> Bool {
     return region.isEqual(beaconRegion)
-           && manager.delegate != nil
-           && manager.isEqual(locationManager)
-           && manager.monitoredRegions.contains(region)
+      && manager.isEqual(locationManager)
+      && manager.monitoredRegions.contains(region)
   }
 
   // MARK: - Monitoring methods
-  
-  func startMonitoring() {
-    dlog("Prepare to start monitoring...")
 
-    activeLocationManager()
+  func startMonitoring(withRegion region: CLBeaconRegion) {
+    self.beaconRegion = region
+    self.turnOnMonitoring()
+  }
+
+  private func prepareMonitoring() {
+    dlog("Prepare to start monitoring...")
 
     guard CLLocationManager.locationServicesEnabled() else {
       dlog("Couldn't turn on monitoring: Location services are not enabled.")
@@ -51,27 +52,23 @@ final class MonitoringService: LocationService {
       dlog("Couldn't turn on region monitoring: Region monitoring is not available for CLBeaconRegion class.")
       return
     }
+
     switch CLLocationManager.authorizationStatus() {
     case .AuthorizedAlways:
-      self.turnOnMonitoring()
+      break
     case .AuthorizedWhenInUse, .Denied, .Restricted:
       dlog("Couldn't turn on monitoring: Required Location Access (Always) missing.")
     case .NotDetermined:
       dlog("About to request location authorization.")
-      locationManager.requestAlwaysAuthorization()
+      self.locationManager.requestAlwaysAuthorization()
     }
   }
 
-  func stopMonitoring() {
-    dlog("About to stop specific monitoring for region: \(beaconRegion), manager: \(locationManager)")
-    inactiveLocationManager()
-    locationManager.stopMonitoringForRegion(beaconRegion)
+  private func turnOnMonitoring() {
+    guard let region = beaconRegion else { return }
+    dlog("Start monitoring: \(beaconRegion)")
+    self.locationManager.startMonitoringForRegion(region)
   }
-
-  func turnOnMonitoring() {
-    locationManager.startMonitoringForRegion(beaconRegion)
-  }
-
 
   // MARK: - Location Manager Delegate methods
 
@@ -87,20 +84,16 @@ final class MonitoringService: LocationService {
   }
 
   func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
-    guard region.isSpecific() && region.isEqual(beaconRegion) && manager.isEqual(locationManager) else { return }
-    dlog("did enter specific region: \(region)")
-    generalMonitoringService?.didEnterSpecificRegion(region)
+    guard region.isEqual(beaconRegion) && manager.isEqual(locationManager) else { return }
+    if beaconRegion != nil {
+      self.delegate?.didEnterRegion(beaconRegion!)
+    }
   }
 
   func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
     guard isResponsibleFor(region, manager: manager) else { return }
-    dlog("did exit specific region: \(region)")
-    generalMonitoringService?.didExitSpecificRegion(region)
+    if beaconRegion != nil {
+      self.delegate?.didExitRegion(beaconRegion!)
+    }
   }
-
-  func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
-    guard isResponsibleFor(region, manager: manager) else { return }
-    dlog("did start monitoring specific region: \(region), manager: \(manager)")
-  }
-
 }
