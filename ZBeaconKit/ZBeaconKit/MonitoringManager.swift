@@ -60,9 +60,12 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
                                         major: CLBeaconMajorValue(beacon.major.integerValue),
                                         minor: CLBeaconMinorValue(beacon.minor.integerValue),
                                         identifier: beaconRegion.identifier + "-SPECIFIC")
-    specificRegion.notifyEntryStateOnDisplay = true
     self.specificBeaconRegion = specificRegion
-    self.monitoringService.startMonitoring(withRegion: specificRegion)
+    let specificRegionWithoutMinor = CLBeaconRegion(proximityUUID: beacon.proximityUUID,
+                                        major: CLBeaconMajorValue(beacon.major.integerValue),
+                                        identifier: beaconRegion.identifier + "-SPECIFIC")
+    specificRegionWithoutMinor.notifyEntryStateOnDisplay = true
+    self.monitoringService.startMonitoring(withRegion: specificRegionWithoutMinor)
   }
 
   private func stopSpecificMonitoring() {
@@ -84,23 +87,25 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
   // MARK: - Monitoring Service delegate methods
 
   func didEnterRegion(region: CLBeaconRegion) {
-    if region.major == nil && region.minor == nil {
+    if region.isSpecific() {
+      dlog("did enter specific region")
+    } else {
       dlog("did enter general region")
       self.stopGeneralMonitoring()
       self.startRanging()
-    } else {
-      dlog("did enter specific region")
     }
   }
 
   func didExitRegion(region: CLBeaconRegion) {
-    if region.major == nil && region.minor == nil {
-      dlog("did exit general region")
-    } else {
+    if region.isSpecific() {
       dlog("did exit specific region")
       self.stopSpecificMonitoring()
-      self.delegate?.didExitBeaconRegion(nil, forReigon: region)
+      if let region = self.specificBeaconRegion {
+        self.delegate?.didExitBeaconRegion(nil, forReigon: region)
+      }
       self.startGeneralMonitoring()
+    } else {
+      dlog("did exit general region")
     }
   }
 
