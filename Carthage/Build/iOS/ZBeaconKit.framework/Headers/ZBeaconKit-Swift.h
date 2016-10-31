@@ -167,7 +167,6 @@ SWIFT_CLASS("_TtC10ZBeaconKit7Manager")
 + (void)setCustomerId:(NSString * _Nullable)value;
 - (nonnull instancetype)initWithEmail:(NSString * _Nonnull)email authToken:(NSString * _Nonnull)token brandId:(NSInteger)brandId OBJC_DESIGNATED_INITIALIZER;
 - (void)start;
-- (void)stop;
 @end
 
 
