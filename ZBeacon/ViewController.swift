@@ -28,13 +28,16 @@ class ViewController: UIViewController {
 
     Manager.debugMode = true
     Manager.customerId = self.generateSampleCustomerId()
-    manager.start()
   }
 
   private func generateSampleCustomerId() -> String {
     let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString
     let deviceIdWithSalt = deviceId! + "YOUR_SALT"
     return deviceIdWithSalt.hmac(.SHA512, key: "YOUR_KEY_FOR_HMAC")
+  }
+
+  @IBAction func buttonTapped(sender: AnyObject) {
+    manager.start()
   }
 
   func sendDebug(sender: AnyObject) {

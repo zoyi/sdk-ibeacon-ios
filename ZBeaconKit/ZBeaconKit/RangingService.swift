@@ -14,10 +14,12 @@ protocol RangingServiceDelegate: class {
 }
 
 final class RangingService: LocationService {
-  var region: CLBeaconRegion! {
+  var region: CLBeaconRegion? {
     willSet(newRegion) {
-      if !locationManager.rangedRegions.isEmpty
-         && !region.isEqual(newRegion)
+      if (region != nil) {
+
+      } else if !locationManager.rangedRegions.isEmpty
+         && !region!.isEqual(newRegion)
       { stopRanging() }
     }
     didSet {
@@ -70,14 +72,22 @@ final class RangingService: LocationService {
   }
 
   func turnOnRanging() {
-    locationManager.startRangingBeaconsInRegion(region)
-    dlog("About to start ranging: \(region)")
+    guard region != nil else {
+      dlog("Cancel to start ranging because region is nil")
+      return
+    }
+    locationManager.startRangingBeaconsInRegion(region!)
+    dlog("About to start ranging: \(region!)")
   }
 
   func stopRanging() {
-    locationManager.stopRangingBeaconsInRegion(region)
+    guard region != nil else {
+      dlog("Cancel to stop ranging because region is nil")
+      return
+    }
+    locationManager.stopRangingBeaconsInRegion(region!)
     inactiveLocationManager()
-    dlog("Turn off ranging for regin: \(region)")
+    dlog("Turn off ranging for regin: \(region!)")
   }
 
   // MARK: - Location Manager Delegate methods

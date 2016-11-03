@@ -18,15 +18,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fQJ-Ds-3Bj">
-                                <frame key="frameInset" minX="2" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxs-Qp-Px8">
+                                <frame key="frameInset" width="375" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="PTr-lC-8hs"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="he3-ib-R3A"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fQJ-Ds-3Bj">
+                                <frame key="frameInset" minX="2" minY="50" width="375" height="617"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fQJ-Ds-3Bj" secondAttribute="bottom" id="SKx-tj-wEM"/>
+                            <constraint firstItem="fQJ-Ds-3Bj" firstAttribute="top" secondItem="oxs-Qp-Px8" secondAttribute="bottom" id="TUe-6M-B67"/>
+                            <constraint firstItem="oxs-Qp-Px8" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="aAL-8f-OWs"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="logTextView" destination="fQJ-Ds-3Bj" id="IGr-Ln-Yvp"/>
