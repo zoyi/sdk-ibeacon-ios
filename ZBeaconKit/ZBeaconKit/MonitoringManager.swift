@@ -39,6 +39,12 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
     self.startGeneralMonitoring()
   }
 
+  func stopMonitoring() {
+    self.stopGeneralMonitoring()
+    self.stopSpecificMonitoring()
+    self.stopRanging()
+  }
+
   // MARK: - General Monitoring methods
 
   private func startGeneralMonitoring() {

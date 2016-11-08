@@ -13,7 +13,6 @@ import CoreLocation
 func dlog<T>(@autoclosure object:  () -> T) {
   guard Manager.debugMode else { return }
   print("[ZBeaconKit]: \(object())\n\n", terminator: "")
-  NSNotificationCenter.defaultCenter().postNotificationName("ZBeaconSendDebugNotification", object: "\(object())")
 }
 
 enum IBeaconRegionEvent: String {
@@ -54,6 +53,10 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       dlog("you should set customer id")
     }
     self.startBrandOutRegion(withBrandId: brandId)
+  }
+
+  public func stop() {
+    self.monitoringManager?.stopMonitoring()
   }
 
   private func getMonitoringRegion(withUUID uuid: NSUUID, identifier: String) -> CLBeaconRegion {
