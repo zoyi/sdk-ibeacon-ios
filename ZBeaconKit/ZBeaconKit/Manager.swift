@@ -157,12 +157,12 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     sendEvent(.Enter, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
   }
 
-  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion) {
+  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion, rssiOnEnter rssi: Int?) {
     guard let region = region as? CLBeaconRegion else { return }
     guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
     dlog("About to send server for EXIT with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
-    sendEvent(.Exit, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
+    sendEvent(.Exit, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: rssi)
   }
 }

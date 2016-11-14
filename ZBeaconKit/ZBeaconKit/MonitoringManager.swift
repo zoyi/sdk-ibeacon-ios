@@ -11,13 +11,14 @@ import CoreLocation
 
 protocol MonitoringManagerDelegate: class {
   func didEnterBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion)
-  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion)
+  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion, rssiOnEnter rssi: Int?)
 }
 
 class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
 
   var beaconRegion: CLBeaconRegion!
   var specificBeaconRegion: CLBeaconRegion?
+  var rssiOnEnter: Int?
   let rangingService = RangingService()
   let monitoringService = MonitoringService()
   weak var delegate: MonitoringManagerDelegate?
@@ -107,7 +108,7 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
       dlog("did exit specific region")
       self.stopSpecificMonitoring()
       if let region = self.specificBeaconRegion {
-        self.delegate?.didExitBeaconRegion(nil, forReigon: region)
+        self.delegate?.didExitBeaconRegion(nil, forReigon: region, rssiOnEnter: self.rssiOnEnter)
       }
       self.startGeneralMonitoring()
     } else {
@@ -119,6 +120,7 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
 
   func didRangeBeacon(beacon: CLBeacon, forRegion region: CLBeaconRegion) {
     self.stopRanging()
+    self.rssiOnEnter = beacon.rssi
     self.delegate?.didEnterBeaconRegion(beacon, forReigon: region)
     self.startSpecificMonitoring(withBeacon: beacon)
   }
