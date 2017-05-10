@@ -10,12 +10,12 @@ import Foundation
 import CoreLocation
 
 extension CLBeacon {
-  func isSameUUIDWith(beacon: CLBeacon) -> Bool {
-    return self.proximityUUID.UUIDString == beacon.proximityUUID.UUIDString
+  func isSameUUIDWith(_ beacon: CLBeacon) -> Bool {
+    return self.proximityUUID.uuidString == beacon.proximityUUID.uuidString
   }
 
-  func isSameUUIDNMajorWith(beacon: CLBeacon) -> Bool {
-    return isSameUUIDWith(beacon) && self.major.intValue == beacon.major.intValue
+  func isSameUUIDNMajorWith(_ beacon: CLBeacon) -> Bool {
+    return isSameUUIDWith(beacon) && self.major.int32Value == beacon.major.int32Value
   }
 
 }

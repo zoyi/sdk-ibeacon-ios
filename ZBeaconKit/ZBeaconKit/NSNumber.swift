@@ -10,6 +10,6 @@ import Foundation
 
 extension NSNumber {
   var hexValue: String {
-    return String(format: "%2X", self.integerValue)
+    return String(format: "%2X", self.intValue)
   }
 }

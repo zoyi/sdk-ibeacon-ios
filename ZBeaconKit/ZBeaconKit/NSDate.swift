@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
   var microsecondsIntervalSince1970: UInt64 {
     return UInt64(self.timeIntervalSince1970 * 1000 * 1000);
   }

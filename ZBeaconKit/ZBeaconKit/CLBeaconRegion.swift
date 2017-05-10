@@ -10,8 +10,8 @@ import Foundation
 import CoreLocation
 
 extension CLBeaconRegion {
-  func isEqualTo(region: CLBeaconRegion) -> Bool {
-    return region.proximityUUID.UUIDString == self.proximityUUID.UUIDString
+  func isEqualTo(_ region: CLBeaconRegion) -> Bool {
+    return region.proximityUUID.uuidString == self.proximityUUID.uuidString
   }
 
   override func isSpecific() -> Bool {

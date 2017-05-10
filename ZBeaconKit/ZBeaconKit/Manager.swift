@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 
-func dlog<T>(@autoclosure object:  () -> T) {
+func dlog<T>( _ object:  @autoclosure () -> T) {
   guard Manager.debugMode else { return }
   print("[ZBeaconKit]: \(object())\n\n", terminator: "")
 }
@@ -24,18 +24,18 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
   public static var debugMode = false
 
-  public static let packageId = NSBundle.mainBundle().bundleIdentifier;
+  public static let packageId = Bundle.main.bundleIdentifier;
   public static var customerId: String? = nil
 
   static let apiEndpoint = "https://api.walkinsights.com/api/v1/brands"
   static let dataEndpoint = "https://dropwizard.walkinsights.com/api/v1/ibeacon_signals"
 
-  static let model = UIDevice.currentDevice().modelName
-  static let systemInfo = UIDevice.currentDevice().systemInfo
+  static let model = UIDevice.current.modelName
+  static let systemInfo = UIDevice.current.systemInfo
   static let sdkVersion = 1
 
-  private var authHeader: [String: String]
-  private let brandId: Int
+  fileprivate var authHeader: [String: String]
+  fileprivate let brandId: Int
 
   var monitoringManager: MonitoringManager? = nil
 
@@ -59,13 +59,13 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     self.monitoringManager?.stopMonitoring()
   }
 
-  private func getMonitoringRegion(withUUID uuid: NSUUID, identifier: String) -> CLBeaconRegion {
+  fileprivate func getMonitoringRegion(withUUID uuid: UUID, identifier: String) -> CLBeaconRegion {
     let region = CLBeaconRegion(proximityUUID: uuid, identifier: identifier)
     region.notifyEntryStateOnDisplay = true
     return region
   }
 
-  private func startBrandOutRegion(withBrandId brandId: Int) {
+  fileprivate func startBrandOutRegion(withBrandId brandId: Int) {
     var brandOutUUIDString: String? = nil
     do {
       let opt = try HTTP.GET(Manager.apiEndpoint + "/\(brandId)",
@@ -76,7 +76,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
         if response.error != nil {
           dlog("Did fetch brand out region with ERROR: \(response.error)")
         } else {
-          if let json = try? NSJSONSerialization.JSONObjectWithData(response.data, options: []),
+          if let json = try? JSONSerialization.jsonObject(with: response.data, options: []),
              let result = json as? [String: AnyObject],
              let brand = result["brand"] as? [String: AnyObject]
           {
@@ -84,9 +84,9 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
             dlog("Did fetch brand info : \(brand)")
           }
         }
-        dispatch_async(dispatch_get_main_queue(), { [unowned self] _ in
+        DispatchQueue.main.async(execute: { [unowned self] _ in
           if let brandOutUUIDString = brandOutUUIDString {
-            let brandOutRegion = self.getMonitoringRegion(withUUID: NSUUID(UUIDString: brandOutUUIDString)!, identifier: "ZBEACON-" + brandOutUUIDString)
+            let brandOutRegion = self.getMonitoringRegion(withUUID: UUID(uuidString: brandOutUUIDString)!, identifier: "ZBEACON-" + brandOutUUIDString)
             self.monitoringManager = MonitoringManager(region: brandOutRegion, delegate: self)
             self.monitoringManager?.startMonitoring()
           }
@@ -98,8 +98,8 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     }
   }
 
-  private func sendEvent(
-    type: IBeaconRegionEvent,
+  fileprivate func sendEvent(
+    _ type: IBeaconRegionEvent,
     uuid: String,
     major: NSNumber?,
     minor: NSNumber?,
@@ -110,19 +110,19 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       return
     }
     guard major != nil else { return }
-    let params: [String: AnyObject] = [
+    let params: [String: Any] = [
       "package_id": Manager.packageId ?? "",
       "customer_id" : customerId,
       "event": type.rawValue,
 
       "ibeacon_uuid": uuid,
-      "major": major?.integerValue ?? NSNull(),
-      "minor": minor?.integerValue ?? NSNull(),
+      "major": major?.intValue ?? NSNull(),
+      "minor": minor?.intValue ?? NSNull(),
       "rssi" : rssi ?? NSNull(),
 
       "os": "ios",
       "device": Manager.model,
-      "ts": "\(NSDate().microsecondsIntervalSince1970)",
+      "ts": "\(Date().microsecondsIntervalSince1970)",
 
       "sdk_version": Manager.sdkVersion
     ]
@@ -148,21 +148,21 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
   // MARK: - Monitoring Manager delegate
 
-  func didEnterBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion) {
+  func didEnterBeaconRegion(_ beacon: CLBeacon?, forReigon region: CLRegion) {
     guard let region = region as? CLBeaconRegion else { return }
-    guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
+    guard beacon == nil || beacon!.proximityUUID.uuidString == region.proximityUUID.uuidString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
-    dlog("About to send server for ENTER with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
-    sendEvent(.Enter, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: beacon?.rssi)
+    dlog("About to send server for ENTER with beacon: \(beacon), for reigon: \(region), on \(Date().microsecondsIntervalSince1970)")
+    sendEvent(.Enter, uuid: region.proximityUUID.uuidString, major: major, minor: minor, rssi: beacon?.rssi)
   }
 
-  func didExitBeaconRegion(beacon: CLBeacon?, forReigon region: CLRegion, rssiOnEnter rssi: Int?) {
+  func didExitBeaconRegion(_ beacon: CLBeacon?, forReigon region: CLRegion, rssiOnEnter rssi: Int?) {
     guard let region = region as? CLBeaconRegion else { return }
-    guard beacon == nil || beacon!.proximityUUID.UUIDString == region.proximityUUID.UUIDString else { return }
+    guard beacon == nil || beacon!.proximityUUID.uuidString == region.proximityUUID.uuidString else { return }
     let major: NSNumber? = beacon?.major ?? region.major
     let minor: NSNumber? = beacon?.minor ?? region.minor
-    dlog("About to send server for EXIT with beacon: \(beacon), for reigon: \(region), on \(NSDate().microsecondsIntervalSince1970)")
-    sendEvent(.Exit, uuid: region.proximityUUID.UUIDString, major: major, minor: minor, rssi: rssi)
+    dlog("About to send server for EXIT with beacon: \(beacon), for reigon: \(region), on \(Date().microsecondsIntervalSince1970)")
+    sendEvent(.Exit, uuid: region.proximityUUID.uuidString, major: major, minor: minor, rssi: rssi)
   }
 }

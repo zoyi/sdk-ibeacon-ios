@@ -19,18 +19,18 @@ class ViewController: UIViewController {
     Manager.customerId = self.generateSampleCustomerId()
   }
 
-  private func generateSampleCustomerId() -> String {
-    let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString
+  fileprivate func generateSampleCustomerId() -> String {
+    let deviceId = UIDevice.current.identifierForVendor?.uuidString
     let deviceIdWithSalt = deviceId! + "YOUR_SALT"
-    return deviceIdWithSalt.hmac(.SHA512, key: "YOUR_KEY_FOR_HMAC")
+    return deviceIdWithSalt.hmac(.sha512, key: "YOUR_KEY_FOR_HMAC")
   }
 
-  @IBAction func buttonTapped(sender: AnyObject) {
+  @IBAction func buttonTapped(_ sender: AnyObject) {
     print("start button tapped")
     manager.start()
   }
 
-  @IBAction func stopTapped(sender: AnyObject) {
+  @IBAction func stopTapped(_ sender: AnyObject) {
     print("stop button tapped")
     manager.stop()
   }

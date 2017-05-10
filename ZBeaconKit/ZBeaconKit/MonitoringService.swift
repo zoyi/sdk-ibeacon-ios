@@ -10,8 +10,8 @@ import Foundation
 import CoreLocation
 
 protocol MonitoringServiceDelegate: class {
-  func didEnterRegion(region: CLBeaconRegion)
-  func didExitRegion(region: CLBeaconRegion)
+  func didEnterRegion(_ region: CLBeaconRegion)
+  func didExitRegion(_ region: CLBeaconRegion)
 }
 
 final class MonitoringService: LocationService {
@@ -27,7 +27,7 @@ final class MonitoringService: LocationService {
 
   // MARK: - Help methods
 
-  func isResponsibleFor(region: CLRegion, manager: CLLocationManager) -> Bool {
+  func isResponsibleFor(_ region: CLRegion, manager: CLLocationManager) -> Bool {
     return region.isEqual(beaconRegion)
       && manager.isEqual(locationManager)
       && manager.monitoredRegions.contains(region)
@@ -40,7 +40,7 @@ final class MonitoringService: LocationService {
     self.turnOnMonitoring()
   }
 
-  private func prepareMonitoring() {
+  fileprivate func prepareMonitoring() {
     dlog("Prepare to start monitoring...")
 
     guard CLLocationManager.locationServicesEnabled() else {
@@ -48,49 +48,49 @@ final class MonitoringService: LocationService {
       return
     }
 
-    guard CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) else {
+    guard CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) else {
       dlog("Couldn't turn on region monitoring: Region monitoring is not available for CLBeaconRegion class.")
       return
     }
 
     switch CLLocationManager.authorizationStatus() {
-    case .AuthorizedAlways:
+    case .authorizedAlways:
       break
-    case .AuthorizedWhenInUse, .Denied, .Restricted:
+    case .authorizedWhenInUse, .denied, .restricted:
       dlog("Couldn't turn on monitoring: Required Location Access (Always) missing.")
-    case .NotDetermined:
+    case .notDetermined:
       dlog("About to request location authorization.")
       self.locationManager.requestAlwaysAuthorization()
     }
   }
 
-  private func turnOnMonitoring() {
+  fileprivate func turnOnMonitoring() {
     guard let region = beaconRegion else { return }
     dlog("Start monitoring: \(beaconRegion)")
-    self.locationManager.startMonitoringForRegion(region)
+    self.locationManager.startMonitoring(for: region)
   }
 
   // MARK: - Location Manager Delegate methods
 
-  func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
     guard manager.isEqual(locationManager) else { return}
     switch status {
-    case .AuthorizedAlways:
+    case .authorizedAlways:
       self.turnOnMonitoring()
-    case .AuthorizedWhenInUse, .Denied, .Restricted:
+    case .authorizedWhenInUse, .denied, .restricted:
       dlog("Couldn't turn on monitoring: Required Location Access (Always) missing.")
     default: break
     }
   }
 
-  func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+  func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
     guard region.isEqual(beaconRegion) && manager.isEqual(locationManager) else { return }
     if beaconRegion != nil {
       self.delegate?.didEnterRegion(beaconRegion!)
     }
   }
 
-  func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+  func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
     guard isResponsibleFor(region, manager: manager) else { return }
     if beaconRegion != nil {
       self.delegate?.didExitRegion(beaconRegion!)
