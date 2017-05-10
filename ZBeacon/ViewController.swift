@@ -11,7 +11,7 @@ import ZBeaconKit
 
 class ViewController: UIViewController {
 
-  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 69)
+  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 69, target: .Production)
 
   override func viewDidLoad() {
     super.viewDidLoad()

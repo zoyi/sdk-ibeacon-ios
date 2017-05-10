@@ -20,6 +20,11 @@ enum IBeaconRegionEvent: String {
   case Exit = "leave"
 }
 
+@objc public enum Target: Int {
+  case Production
+  case Development
+}
+
 public final class Manager: NSObject, MonitoringManagerDelegate {
 
   public static var debugMode = false
@@ -28,7 +33,14 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
   public static var customerId: String? = nil
 
   static let apiEndpoint = "https://api.walkinsights.com/api/v1/brands"
-  static let dataEndpoint = "https://dropwizard.walkinsights.com/api/v1/ibeacon_signals"
+  var dataEndpoint: String {
+    switch self.target {
+    case .Production:
+      return "https://dropwizard.walkinsights.com/api/v1/ibeacon_signals"
+    case .Development:
+      return "https://dropwizard-dev.walkinsights.com/api/v1/ibeacon_signals"
+    }
+  }
 
   static let model = UIDevice.current.modelName
   static let systemInfo = UIDevice.current.systemInfo
@@ -36,15 +48,17 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
   fileprivate var authHeader: [String: String]
   fileprivate let brandId: Int
+  fileprivate let target: Target
 
   var monitoringManager: MonitoringManager? = nil
 
-  public init(email: String, authToken token: String, brandId: Int) {
+  public init(email: String, authToken token: String, brandId: Int, target: Target = .Production) {
     self.authHeader = [
       "X-User-Email" : email,
       "X-User-Token" : token
     ]
     self.brandId = brandId
+    self.target = target
     super.init()
   }
 
@@ -129,7 +143,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
     do {
       dlog("Try to send event with params: \(params)")
-      let opt = try HTTP.POST(Manager.dataEndpoint,
+      let opt = try HTTP.POST(self.dataEndpoint,
                               parameters: params,
                               headers: self.authHeader,
                               requestSerializer: JSONParameterSerializer())
