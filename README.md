@@ -11,15 +11,20 @@
 
 Add `NSLocationAlwaysUsageDescription` key into your project `info.plist`.
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-12 at 12.52.15 PM.png)
+![](http://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/add-location-always-usage-permission.png)
 
 ### [Download](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/ZBeaconKit.framework.zip) `ZBeaconKit.framework`, and copy to your project root folder.
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-12 at 2.34.58 PM.png)
+![](http://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/download-zbeaconkit-framework.png)
+![](https://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/locate-file-in-project-root.png)
+
+### Drag the `ZBeaconKit.framework` to your Xcode project path.
+
+![](https://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/drag-and-drop-to-xcode-project-path.png)
 
 ### [Install](https://github.com/Carthage/Carthage/releases) `carthage`.
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-12 at 2.48.12 PM.png)
+![](http://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/install-carthage.png)
 
 ### Adding copy file run script.
 
@@ -32,21 +37,21 @@ and add the paths to the frameworks you want to use under “Input Files”, e.g
 $(SRCROOT)/ZBeaconKit.framework
 ```
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-12 at 2.38.32 PM.png)
+![](http://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/add-copy-file-run-script.png)
 
 ### The last step, configure your App specific info.
 
 #### If you are building with Swift
 - Import `ZBeaconKit`, configure your App authentication information.
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-15 at 2.45.49 PM.png)
+![](http://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/import-zbeaconkit-in-swift.png)
 
 #### If you are building with Objective-C
 
 - Enable `Embedded Content Contains Swift Code` flag in `Build Settings`.
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-12 at 3.02.36 PM.png)
+![](https://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/enable-embedded-content-contains-swift-code.png)
 
 - Import `<ZBeaconKit/ZBeaconKit.h>`, configure your App authentication information.
 
-![](http://wifi-zoyi-jp.s3.amazonaws.com/wudi/Screen Shot 2016-01-15 at 2.50.39 PM.png)
+![](https://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/import-zbeaconkit-in-objc.png)
