@@ -44,7 +44,7 @@ $(SRCROOT)/ZBeaconKit.framework
 #### If you are building with Swift
 - Import `ZBeaconKit`, configure your App authentication information.
 
-```
+```swift
 import ZBeaconKit
 
 ...
@@ -84,7 +84,7 @@ func generateSampleCustomerId() -> String {
 
 - Import `<ZBeaconKit/ZBeaconKit.h>`, configure your App authentication information.
 
-```
+```objective-c
 
 - (void)viewDidLoad {
   [super viewDidLoad];
