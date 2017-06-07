@@ -129,3 +129,46 @@ func generateSampleCustomerId() -> String {
   }
 
 ```
+
+### Deployment Target
+**Note** that you must describe _deployment target_ to manager when initializing.
+The deployment target depends on ZOYI's actual O2O server endpoint.
+
+This flag is only used for mutual test with ZOYI Corp. 
+So most of 3rd parties does not need to change this.
+
+Case of Swift:
+```swift
+// Set target as PRODUCTION
+let manager = Manager(
+  email: "...",
+  authToken: "...",
+  brandId: 0,
+  target: .Production
+)
+
+// Set target as DEVELOPMENT (signals can not be seen by BLE API)
+let manager = Manager(
+  email: "...",
+  authToken: "...",
+  brandId: 0,
+  target: .Development
+)
+```
+
+Objective-C:
+```objective-c
+// Set target as PRODUCTION
+self.manager = [[Manager alloc]
+                initWithEmail:@"..."
+                authToken:@"..."
+                brandId:0
+                target:TargetProduction];
+
+// Set target as DEVELOPMENT (signals can not be seen by BLE API)
+self.manager = [[Manager alloc]
+                initWithEmail:@"..."
+                authToken:@"..."
+                brandId:0
+                target:TargetDevelopment];
+```
