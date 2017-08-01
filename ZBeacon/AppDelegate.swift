@@ -12,24 +12,11 @@ import ZBeaconKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-//  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 69)
-
   var window: UIWindow?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-//    Manager.debugMode = true
-//    Manager.customerId = self.generateSampleCustomerId()
-//    manager.start()
-//    print(Manager.customerId)
-//    print(Manager.packageId)
     return true
-  }
-
-  fileprivate func generateSampleCustomerId() -> String {
-    let deviceId = UIDevice.current.identifierForVendor?.uuidString
-    let deviceIdWithSalt = deviceId! + "YOUR_SALT"
-    return deviceIdWithSalt.hmac(.sha512, key: "YOUR_KEY_FOR_HMAC")
   }
 
   func applicationWillResignActive(_ application: UIApplication) {

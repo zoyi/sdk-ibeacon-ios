@@ -11,7 +11,7 @@ import ZBeaconKit
 
 class ViewController: UIViewController {
 
-  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 69, target: .Production)
+  let manager = Manager(email: "YOUR_EMAIL", authToken: "YOUR_AUTH_TOKEN", brandId: 1, target: .Production)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     Manager.customerId = self.generateSampleCustomerId()
   }
 
-  fileprivate func generateSampleCustomerId() -> String {
+  func generateSampleCustomerId() -> String {
     let deviceId = UIDevice.current.identifierForVendor?.uuidString
     let deviceIdWithSalt = deviceId! + "YOUR_SALT"
     return deviceIdWithSalt.hmac(.sha512, key: "YOUR_KEY_FOR_HMAC")
