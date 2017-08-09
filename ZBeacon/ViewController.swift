@@ -11,12 +11,30 @@ import ZBeaconKit
 
 class ViewController: UIViewController {
 
-  let manager = Manager(email: "YOUR_EMAIL", authToken: "YOUR_AUTH_TOKEN", brandId: 1, target: .Production)
+  @IBOutlet weak var textView: UITextView!
+
+  let manager = Manager(email: "app@zoyi.co", authToken: "17bFLC5F3ddQNwSHKxSk", brandId: 69, target: .Production)
+  let testManager = TestManager()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     Manager.debugMode = true
     Manager.customerId = self.generateSampleCustomerId()
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(receivedLog(withNotification:)),
+                                           name: TestManager.PRINT_LOG, object: nil)
+  }
+
+  func receivedLog(withNotification notification: NSNotification) {
+    DispatchQueue.main.async {
+      if let log = notification.userInfo?["log"] as? String {
+        if let text = self.textView.text {
+          self.textView.text = "\(text)\n\(log)"
+        } else {
+          self.textView.text = log
+        }
+      }
+    }
   }
 
   func generateSampleCustomerId() -> String {
@@ -27,12 +45,14 @@ class ViewController: UIViewController {
 
   @IBAction func buttonTapped(_ sender: AnyObject) {
     print("start button tapped")
-    manager.start()
+    testManager.startTest()
+//    manager.start()
   }
 
   @IBAction func stopTapped(_ sender: AnyObject) {
     print("stop button tapped")
-    manager.stop()
+//    testManager.stopTest()
+//    manager.stop()
   }
 
   override func didReceiveMemoryWarning() {
