@@ -14,11 +14,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
+  let manager = Manager(target: .Production)
+
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+    // Initialize ZBeacon Manager
+    Manager.debugMode = true
+    Manager.customerId = self.generateSampleCustomerId()
+
+    if launchOptions?[UIApplicationLaunchOptionsKey.location] != nil {
+      self.manager.restart()
+    }
+
     // Override point for customization after application launch.
     return true
   }
 
+  func generateSampleCustomerId() -> String {
+    let deviceId = UIDevice.current.identifierForVendor?.uuidString
+    let deviceIdWithSalt = deviceId! + "YOUR_SALT"
+    return deviceIdWithSalt.hmac(.sha512, key: "YOUR_KEY_FOR_HMAC")
+  }
+  
   func applicationWillResignActive(_ application: UIApplication) {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -40,7 +57,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationWillTerminate(_ application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
-
-
 }
 
