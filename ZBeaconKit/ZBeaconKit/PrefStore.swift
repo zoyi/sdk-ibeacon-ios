@@ -10,10 +10,11 @@ import Foundation
 import CoreLocation
 
 class PrefStore {
-  static let PREFIX = "ZBeaconKit_Beacon_"
+
+  // MARK: - Beacon
 
   static func getKey(uuid: String) -> String {
-    return "\(PREFIX)\(uuid)"
+    return "ZBeaconKit_Beacon_\(uuid.lowercased())"
   }
 
   static func save(uuid: String, major: Int, minor: Int) {
@@ -36,5 +37,20 @@ class PrefStore {
   static func clear(uuid: String) {
     let key = getKey(uuid: uuid)
     UserDefaults.standard.removeObject(forKey: key)
+  }
+
+
+  // MARK: - Area
+
+  static func getAreaKey(uuid: String) -> String {
+    return "ZBeaconKit_Area_\(uuid.lowercased())"
+  }
+
+  static func saveArea(uuid: String, name: String) {
+    UserDefaults.standard.set(name, forKey: getAreaKey(uuid: uuid))
+  }
+
+  static func getArea(uuid: String) -> String? {
+    return UserDefaults.standard.string(forKey: getAreaKey(uuid: uuid))
   }
 }
