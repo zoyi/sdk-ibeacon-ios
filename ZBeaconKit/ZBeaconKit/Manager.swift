@@ -84,6 +84,8 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
   // MARK: - Public methods
 
   public func start() {
+    self.stop()
+
     if Manager.customerId == nil {
       dlog("you should set customer id")
     }
@@ -121,7 +123,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       manager.startMonitoring()
       self.monitoringManagers.append(manager)
     }
-
+    dlog("All start monitoring \(self.monitoringManagers.count)")
   }
 
   private func fetchUUIDs() {
@@ -143,6 +145,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
              let ibeacons = result["square_ibeacons"] as? [AnyObject] {
             dlog("Did fetch event from zoyi server with response: \(ibeacons)")
 
+            Manager.uuids = [String]()
             ibeacons.enumerated().forEach({
               if let uuid = ibeacons[$0.offset]["uuid"] as? String,
                  let name = ibeacons[$0.offset]["name"] as? String {
