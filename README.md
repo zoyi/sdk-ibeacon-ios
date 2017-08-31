@@ -55,7 +55,6 @@ override func viewDidLoad() {
   let manager = Manager(
     email: "app@zoyi.co",
     authToken: "YOUR_AUTH_TOKEN",
-    brandId: 0,
     target: .Production // For development, use .Development
   )
   Manager.debugMode = true // For debugging
@@ -92,7 +91,6 @@ func generateSampleCustomerId() -> String {
   self.manager = [[Manager alloc]
                   initWithEmail:@"xxxx@zoyi.co"
                   authToken:@"A1B2C3D4E5F6"
-                  brandId:0
                   target:TargetProduction];  // For development, use TargetDevelopment
 
   [Manager setDebugMode:true]; // For debugging
@@ -143,7 +141,6 @@ Case of Swift:
 let manager = Manager(
   email: "...",
   authToken: "...",
-  brandId: 0,
   target: .Production
 )
 
@@ -151,7 +148,6 @@ let manager = Manager(
 let manager = Manager(
   email: "...",
   authToken: "...",
-  brandId: 0,
   target: .Development
 )
 ```
@@ -162,13 +158,11 @@ Objective-C:
 self.manager = [[Manager alloc]
                 initWithEmail:@"..."
                 authToken:@"..."
-                brandId:0
                 target:TargetProduction];
 
 // Set target as DEVELOPMENT (signals can not be seen by BLE API)
 self.manager = [[Manager alloc]
                 initWithEmail:@"..."
                 authToken:@"..."
-                brandId:0
                 target:TargetDevelopment];
 ```
