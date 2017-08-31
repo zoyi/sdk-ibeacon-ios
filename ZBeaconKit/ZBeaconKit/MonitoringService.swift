@@ -40,6 +40,19 @@ final class MonitoringService: LocationService {
     self.turnOnMonitoring()
   }
 
+  func stopMonitoring() {
+    guard let region = self.beaconRegion else { return }
+    dlog("Stop monitoring for region: \(region)")
+    self.locationManager.stopMonitoring(for: region)
+    self.beaconRegion = nil
+  }
+
+  fileprivate func turnOnMonitoring() {
+    guard let region = self.beaconRegion else { return }
+    dlog("Start monitoring for region: \(region)")
+    self.locationManager.startMonitoring(for: region)
+  }
+
   fileprivate func prepareMonitoring() {
     dlog("Prepare to start monitoring...")
 
@@ -64,16 +77,10 @@ final class MonitoringService: LocationService {
     }
   }
 
-  fileprivate func turnOnMonitoring() {
-    guard let region = beaconRegion else { return }
-    dlog("Start monitoring: \(beaconRegion)")
-    self.locationManager.startMonitoring(for: region)
-  }
-
   // MARK: - Location Manager Delegate methods
 
   func locationManager(_ manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-    guard manager.isEqual(locationManager) else { return}
+    guard manager.isEqual(locationManager) else { return }
     switch status {
     case .authorizedAlways:
       self.turnOnMonitoring()
@@ -84,8 +91,9 @@ final class MonitoringService: LocationService {
   }
 
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-    guard region.isEqual(beaconRegion) && manager.isEqual(locationManager) else { return }
+    guard isResponsibleFor(region, manager: manager) else { return }
     if beaconRegion != nil {
+      dlog("Did enter monitoring for region: \(region)")
       self.delegate?.didEnterRegion(beaconRegion!)
     }
   }
@@ -93,6 +101,7 @@ final class MonitoringService: LocationService {
   func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
     guard isResponsibleFor(region, manager: manager) else { return }
     if beaconRegion != nil {
+      dlog("Did exit monitoring for region: \(region)")
       self.delegate?.didExitRegion(beaconRegion!)
     }
   }
