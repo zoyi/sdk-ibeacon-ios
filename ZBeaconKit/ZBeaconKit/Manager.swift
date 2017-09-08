@@ -39,6 +39,15 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
   public static var customerId: String? = nil
   public static var advId: String? = nil
 
+  var packageVersionEndpoint: String {
+    switch self.target {
+    case .Production:
+      return "https://api.walkinsights.com/api/v1/plugins/ios"
+    case .Development:
+      return "http://dev-square.zoyi.co/api/v1/plugins/ios"
+    }
+  }
+
   var uuidEndpoint: String {
     switch self.target {
     case .Production:
@@ -60,10 +69,14 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
   static let model = UIDevice.current.modelName
   static let systemInfo = UIDevice.current.systemInfo
   static let sdkVersion = 2
+  static let currentPackageVersion = "1.0.0"
 
   fileprivate var monitoringManagers = [MonitoringManager]()
   fileprivate var authHeader: [String: String]
   fileprivate let target: Target
+  fileprivate var retryCount = 0
+  fileprivate let retryTimeInterval = 60.0
+  fileprivate let maxRetryCount = 5
 
   // MARK: - Initialize
 
@@ -90,7 +103,9 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       dlog("you should set customer id")
     }
 
-    self.fetchUUIDs()
+    self.retryCount = 0
+
+    self.fetchPackageVersion()
   }
 
   public func restart() {
@@ -126,7 +141,51 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     dlog("All start monitoring \(self.monitoringManagers.count)")
   }
 
-  private func fetchUUIDs() {
+  func fetchPackageVersion() {
+    do {
+      dlog("Try to fetch package version")
+
+      let opt = try HTTP.GET(self.packageVersionEndpoint,
+                             parameters: nil,
+                             headers: nil,
+                             requestSerializer: HTTPParameterSerializer())
+
+      opt.start({ [unowned self] response in
+        if response.error != nil {
+          dlog("Did fetch package version with ERROR: \(response.error!)")
+          self.startRetryTimer()
+        } else {
+
+          if let json = try? JSONSerialization.jsonObject(with: response.data, options: []),
+            let result = json as? [String: AnyObject],
+            let ibeaconPlugins = result["ibeacon_plugins"],
+            let newestVersion = ibeaconPlugins["newest_version"] as? String,
+            let minimumVersion = ibeaconPlugins["minimum_version"] as? String {
+            dlog("Did fetch package version with response: \(result)")
+
+            // get current version
+            let cv = Manager.currentPackageVersion
+            if cv.compare(minimumVersion, options: .numeric) == .orderedSame ||
+               cv.compare(minimumVersion, options: .numeric) == .orderedDescending {
+              // current version is newer than or equal to minimum version
+              if cv.compare(newestVersion, options: .numeric) == .orderedAscending {
+                // current version is older than newest version
+                dlog("Warning: Newest version \(newestVersion) is available")
+              }
+              self.fetchUUIDs()
+            } else {
+              dlog("Error: Current version is not compatible. Need to upgrade to newest version: \(newestVersion)")
+            }
+          }
+        }
+      })
+    } catch {
+      dlog("Error on request to fetch package version")
+      self.startRetryTimer()
+    }
+  }
+
+  func fetchUUIDs() {
     do {
       dlog("Try to fetch uuids")
 
@@ -137,13 +196,16 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
       opt.start({ [unowned self] response in
         if response.error != nil {
-          dlog("Did fetch event with ERROR: \(response.error!)")
+          dlog("Did fetch uuids with ERROR: \(response.error!)")
+          self.startRetryTimer()
         } else {
 
           if let json = try? JSONSerialization.jsonObject(with: response.data, options: []),
              let result = json as? [String: AnyObject],
              let ibeacons = result["square_ibeacons"] as? [AnyObject] {
-            dlog("Did fetch event from zoyi server with response: \(ibeacons)")
+            dlog("Did fetch uuids with response: \(ibeacons)")
+
+            self.retryCount = 0
 
             Manager.uuids = [String]()
             ibeacons.enumerated().forEach({
@@ -162,6 +224,32 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       })
     } catch {
       dlog("Error on request to fetch uuids: \(error)")
+      self.startRetryTimer()
+    }
+  }
+
+  fileprivate func startRetryTimer() {
+    if self.retryCount < self.maxRetryCount {
+      dlog("Set timer to retry fetch")
+      self.retryCount = self.retryCount + 1
+
+      DispatchQueue.main.async {
+        if #available(iOS 10.0, *) {
+          Timer.scheduledTimer(
+            withTimeInterval: self.retryTimeInterval,
+            repeats: false,
+            block: { (_) in
+              self.fetchUUIDs()
+          })
+        } else {
+          Timer.scheduledTimer(
+            timeInterval: self.retryTimeInterval,
+            target: self,
+            selector: #selector(self.fetchUUIDs),
+            userInfo: nil,
+            repeats: false)
+        }
+      }
     }
   }
 
