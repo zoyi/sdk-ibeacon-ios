@@ -150,10 +150,10 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
                              headers: nil,
                              requestSerializer: HTTPParameterSerializer())
 
-      opt.start({ [unowned self] response in
+      opt.start({ [weak self] response in
         if response.error != nil {
           dlog("Did fetch package version with ERROR: \(response.error!)")
-          self.startRetryTimer()
+          self?.startRetryTimer()
         } else {
 
           if let json = try? JSONSerialization.jsonObject(with: response.data, options: []),
@@ -172,7 +172,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
                 // current version is older than newest version
                 dlog("Warning: Newest version \(newestVersion) is available")
               }
-              self.fetchUUIDs()
+              self?.fetchUUIDs()
             } else {
               dlog("Error: Current version is not compatible. Need to upgrade to newest version: \(newestVersion)")
             }
@@ -194,10 +194,10 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
                              headers: self.authHeader,
                              requestSerializer: HTTPParameterSerializer())
 
-      opt.start({ [unowned self] response in
+      opt.start({ [weak self] response in
         if response.error != nil {
           dlog("Did fetch uuids with ERROR: \(response.error!)")
-          self.startRetryTimer()
+          self?.startRetryTimer()
         } else {
 
           if let json = try? JSONSerialization.jsonObject(with: response.data, options: []),
@@ -205,7 +205,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
              let ibeacons = result["square_ibeacons"] as? [AnyObject] {
             dlog("Did fetch uuids with response: \(ibeacons)")
 
-            self.retryCount = 0
+            self?.retryCount = 0
 
             Manager.uuids = [String]()
             ibeacons.enumerated().forEach({
@@ -216,8 +216,8 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
               }
             })
 
-            DispatchQueue.main.async(execute: { [unowned self] _ in
-              self.startMonitoring()
+            DispatchQueue.main.async(execute: { [weak self] _ in
+              self?.startMonitoring()
             })
           }
         }
