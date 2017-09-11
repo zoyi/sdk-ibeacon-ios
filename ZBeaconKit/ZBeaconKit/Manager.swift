@@ -68,7 +68,6 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
   static let model = UIDevice.current.modelName
   static let systemInfo = UIDevice.current.systemInfo
-  static let sdkVersion = 2
   static let currentPackageVersion = "1.0.0"
 
   fileprivate var monitoringManagers = [MonitoringManager]()
@@ -278,7 +277,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       "device": Manager.model,
       "ts": "\(Date().microsecondsIntervalSince1970)",
 
-      "sdk_version": Manager.sdkVersion
+      "sdk_version": Manager.currentPackageVersion
     ]
 
     do {
@@ -289,6 +288,10 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       opt.start({ response in
         if response.error != nil {
           dlog("Did send event with ERROR: \(response.error!)")
+          if response.statusCode == 426 {
+            dlog("UnsupportedSDKVersionError: stop monitoring")
+            self.stop()
+          }
         } else {
           dlog("Did send event to zoyi server response: \(response.data)")
         }
