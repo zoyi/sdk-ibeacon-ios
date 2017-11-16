@@ -7,4 +7,5 @@ framework module ZBeaconKit {
 
 module ZBeaconKit.Swift {
     header "ZBeaconKit-Swift.h"
+    requires objc
 }
