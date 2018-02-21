@@ -1,0 +1,6 @@
+framework module ZBeaconKit {
+  umbrella header "ZBeaconKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
