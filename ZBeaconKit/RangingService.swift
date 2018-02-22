@@ -14,13 +14,17 @@ protocol RangingServiceDelegate: class {
   func didFailRangeBeacon(forRegion region: CLBeaconRegion)
 }
 
-final class RangingService: LocationService {
-
+/**
+ * CLLocationManagerDelegate method didRangeBeacons will not get called when
+ * delegate method was implemented other than UIViewController.
+ */
+final class RangingService: UIViewController, CLLocationManagerDelegate {
+  let locationManager = CLLocationManager()
   // MARK: - Properties
 
   var region: CLBeaconRegion? {
     willSet(newRegion) {
-      if !locationManager.rangedRegions.isEmpty && region?.isEqual(newRegion) == false {
+      if !self.locationManager.rangedRegions.isEmpty && region?.isEqual(newRegion) == false {
         self.stopRanging()
       }
     }
@@ -31,14 +35,17 @@ final class RangingService: LocationService {
   weak var delegate: RangingServiceDelegate?
 
   // MARK: - Initialize
-
-  override init() {
-    super.init()
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
-
-  convenience init(region: CLBeaconRegion) {
-    self.init()
-    self.region = region
+  
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+  
+  convenience init() {
+    self.init(nibName: nil, bundle: nil)
   }
 
   deinit {
@@ -52,7 +59,8 @@ final class RangingService: LocationService {
       dlog("Cancel to start ranging because region is nil")
       return
     }
-    self.activeLocationManager()
+
+    self.locationManager.delegate = self
     self.locationManager.startRangingBeacons(in: region)
     dlog("Start ranging for region: \(region)")
   }
@@ -63,16 +71,19 @@ final class RangingService: LocationService {
       return
     }
     self.locationManager.stopRangingBeacons(in: region)
-    self.inactiveLocationManager()
     dlog("Stop ranging for region: \(region)")
   }
 
   // MARK: - Location Manager Delegate methods
-
+  
+  func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+    dlog("Location state: \(state.rawValue) for region: \(region)")
+  }
+  
   func locationManager(
     _ manager: CLLocationManager,
     didRangeBeacons beacons: [CLBeacon],
-    inRegion region: CLBeaconRegion) {
+    in region: CLBeaconRegion) {
     guard manager.isEqual(self.locationManager) else { return }
 
     var rangedBeacon: CLBeacon? = nil
@@ -97,8 +108,8 @@ final class RangingService: LocationService {
 
   func locationManager(
     _ manager: CLLocationManager,
-    rangingBeaconsDidFailForRegion region: CLBeaconRegion,
-    withError error: NSError) {
+    rangingBeaconsDidFailFor region: CLBeaconRegion,
+    withError error: Error) {
     dlog("did fail range beacon for region: \(region), with error: \(error)")
     self.delegate?.didFailRangeBeacon(forRegion: region)
   }

@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import ZBeaconKit
+import CoreLocation
 
 class ViewController: UIViewController {
+  let manager = CLLocationManager()
   
   @IBAction func buttonTapped(_ sender: AnyObject) {
     print("start button tapped")
@@ -26,6 +27,6 @@ class ViewController: UIViewController {
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
-  }
-  
+  }  
 }
+

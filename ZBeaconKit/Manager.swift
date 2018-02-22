@@ -60,7 +60,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     case .Production:
       return "https://dropwizard.walkinsights.com/api/v1/ibeacon_signals"
     case .Development:
-      return "https://dropwizard-dev.walkinsights.com/api/v1/ibeacon_signals"
+      return "http://dropwizard-dev.walkinsights.com/api/v1/ibeacon_signals"
     }
   }
 

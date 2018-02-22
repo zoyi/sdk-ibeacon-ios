@@ -1,7 +1,21 @@
 # ZBeaconKit
 
 ## How to build?
+### Cocoapods
+In your Podfile, add
 
+````
+target 'Example' do
+  use_frameworks!
+  ... your pods
+  # Pods for ZBeaconKitExample
+  pod 'ZBeaconKit', :path => '../..'
+end
+````
+
+and run `pod repo update` then `pod install`
+
+### Carthage
 This project could simply be built with [Carthage](https://github.com/Carthage/Carthage).
 
 In case you are first get to know carthage, here is a brief description of how to build carthage.

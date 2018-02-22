@@ -7,7 +7,7 @@ This application makes use of the following third party libraries:
 
 This is an agreement between you and ZOYI Corporation (“ZOYI”), a Korean corporation
 located at 15th Floor, 141 Teheran-ro, Gangnam-gu (KR Tower), Seoul, Korea, regarding 
-your use of the SDK and any associated documentation or other materials for Walk-insight 
+your use of the SDK and any associated documentation or other materials for Walk Insights 
 as made available by ZOYI (collectively, the "SDK"). This agreement applies to any 
 updates or supplements for the SDK, unless other terms accompany those items. If so, 
 those other terms apply.
@@ -19,8 +19,8 @@ access or use the SDK.
 If you agree to comply with this agreement, you have the rights below.
 (1) USE OF THE SDK. Subject to your compliance with this agreement, ZOYI hereby 
 authorizes you to use the SDK solely for the purpose of creating mobile applications 
-designed to operate with Walk-insight (referred to as "Authorized Applications"). 
-You may not rent, lease or lend any of your rights in the SDK or access to Walk-insight. You may make a reasonable number of copies of the SDK for the purposes set 
+designed to operate with Walk Insights (referred to as "Authorized Applications"). 
+You may not rent, lease or lend any of your rights in the SDK or access to Walk Insights. You may make a reasonable number of copies of the SDK for the purposes set 
 forth herein, provided that you reproduce only complete copies, including without 
 limitation all "read me" files, copyright notices, and other legal notices and 
 terms that ZOYI has included in the SDK.
@@ -38,7 +38,7 @@ copy; or (d) rent, lease or lend the SDK.
 
 (3) USE OF THE SERVICES. Your use of ZBeaconKit, and the use of ZBeaconKit 
 by anyone hosting or using your Authorized Application, is governed by the 
-then-current Terms of Services (“TOS”) for Walk-insight which can be found 
+then-current Terms of Services (“TOS”) for Walk Insights which can be found 
 at: [https://walkinsights.com/terms_of_services/basic]. 
 
 (4) FEEDBACK. By submitting feedback to ZOYI, either via email at [feedback@zoyi.io]
@@ -66,7 +66,7 @@ option, by posting on any portion of [ZOYI.co] or by electronic mail to any
 e-mail address provided by you to ZOYI.
 
 (8) ENTIRE AGREEMENT. This agreement, and any applicable TOS or contract for 
-Walk-insight, are the entire agreement with respect to the SDK.
+Walk Insights, are the entire agreement with respect to the SDK.
 
 (9) APPLICABLE LAW AND VENUE. Korean law governs the interpretation of this 
 agreement and applies to claims for breach of it, regardless of conflict of 
