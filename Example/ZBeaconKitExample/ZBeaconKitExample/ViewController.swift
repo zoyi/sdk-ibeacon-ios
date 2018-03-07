@@ -9,8 +9,14 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, DebugDelegate {
   let manager = CLLocationManager()
+  @IBOutlet weak var logView: UITextView!
+  
+  override func viewDidLoad() {
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    appDelegate?.delegate = self
+  }
   
   @IBAction func buttonTapped(_ sender: AnyObject) {
     print("start button tapped")
@@ -24,9 +30,18 @@ class ViewController: UIViewController {
     appDelegate?.manager.stop()
   }
   
+  @IBAction func clearLogs(_ sender: Any) {
+    
+    logView.text = ""
+  }
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
-  }  
+  }
+  
+  func debug(with message: String) {
+    logView.text.append(message)
+  }
 }
 
