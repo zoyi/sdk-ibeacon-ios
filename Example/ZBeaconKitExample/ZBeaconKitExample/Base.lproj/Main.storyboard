@@ -58,7 +58,6 @@
                                 </constraints>
                                 <state key="normal" title="Clear"/>
                                 <connections>
-                                    <action selector="buttonTapped:" destination="Ocu-MD-0wQ" eventType="touchUpInside" id="NZc-Vi-utQ"/>
                                     <action selector="clearLogs:" destination="Ocu-MD-0wQ" eventType="touchUpInside" id="wN1-xO-PVH"/>
                                 </connections>
                             </button>

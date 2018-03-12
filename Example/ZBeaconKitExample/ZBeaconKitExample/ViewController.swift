@@ -8,14 +8,14 @@
 
 import UIKit
 import CoreLocation
+import ZBeaconKit
 
 class ViewController: UIViewController, DebugDelegate {
   let manager = CLLocationManager()
   @IBOutlet weak var logView: UITextView!
   
   override func viewDidLoad() {
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    appDelegate?.delegate = self
+    debugDelegate = self
   }
   
   @IBAction func buttonTapped(_ sender: AnyObject) {

@@ -13,7 +13,11 @@ import AdSupport
 
 func dlog<T>( _ object:  @autoclosure () -> T) {
   guard Manager.debugMode else { return }
-  print("[ZBeaconKit]: \(object())\n\n", terminator: "")
+  let message = "[ZBeaconKit]: \(object())\n\n"
+  print(message, terminator: "")
+  DispatchQueue.main.async {
+    debugDelegate?.debug(with: message)
+  }
 }
 
 enum IBeaconRegionEvent: String {
@@ -25,6 +29,12 @@ enum IBeaconRegionEvent: String {
   case Production
   case Development
 }
+
+/** debugging purpose **/
+public protocol DebugDelegate: class {
+  func debug(with message: String)
+}
+public var debugDelegate: DebugDelegate? = nil
 
 @objc
 public final class Manager: NSObject, MonitoringManagerDelegate {
