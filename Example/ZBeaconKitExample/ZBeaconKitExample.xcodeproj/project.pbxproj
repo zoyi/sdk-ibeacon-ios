@@ -130,6 +130,11 @@
 						CreatedOnToolsVersion = 9.1;
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -371,8 +376,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ZBeaconKitExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoyi.ZBeacon.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoyi.ZBeaconKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZBeaconKitExample/ZBeaconKitExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -394,8 +400,9 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = ZBeaconKitExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoyi.ZBeacon.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoyi.ZBeaconKitExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZBeaconKitExample/ZBeaconKitExample-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

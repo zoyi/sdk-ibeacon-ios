@@ -8,6 +8,7 @@
 
 import UIKit
 import ZBeaconKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     if launchOptions?[UIApplicationLaunchOptionsKey.location] != nil {
       self.manager.restart()
+    }
+    
+    let center = UNUserNotificationCenter.current()
+    let options: UNAuthorizationOptions = [.alert, .sound]
+    center.requestAuthorization(options: options) {
+      (granted, error) in
+      if !granted {
+        print("Something went wrong")
+      }
     }
     
     return true
