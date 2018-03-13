@@ -20,12 +20,18 @@ protocol RangingServiceDelegate: class {
  */
 final class RangingService: UIViewController, CLLocationManagerDelegate {
   let locationManager = CLLocationManager()
+  var rangingQueue = [CLBeaconRegion]()
+  var isRanging = false
+  
   // MARK: - Properties
 
   var region: CLBeaconRegion? {
     willSet(newRegion) {
       if !self.locationManager.rangedRegions.isEmpty && region?.isEqual(newRegion) == false {
         self.stopRanging()
+      }
+      if let region = newRegion {
+        self.rangingQueue.append(region)
       }
     }
     didSet {
@@ -46,6 +52,9 @@ final class RangingService: UIViewController, CLLocationManagerDelegate {
   
   convenience init() {
     self.init(nibName: nil, bundle: nil)
+    if #available(iOS 9.0, *){
+      self.locationManager.allowsBackgroundLocationUpdates = true
+    }
   }
 
   deinit {
@@ -55,30 +64,42 @@ final class RangingService: UIViewController, CLLocationManagerDelegate {
   // MARK: - Ranging methods
 
   func startRanging() {
-    guard let region = self.region else {
-      dlog("Cancel to start ranging because region is nil")
+    guard !self.isRanging else {
+      dlog("[INFO] Ranging is happening .. will execute after finish current one")
+      return
+    }
+    
+    guard let region = self.rangingQueue.first else {
+      dlog("[INFO] Cancel to start ranging because region is nil")
       return
     }
 
+    self.isRanging = true
     self.locationManager.delegate = self
     self.locationManager.startRangingBeacons(in: region)
-    dlog("Start ranging for region: \(region)")
+    dlog("[INFO] Start ranging for region: \(region)")
   }
 
   func stopRanging() {
-    guard let region = self.region else {
-      dlog("Cancel to stop ranging because region is nil")
+    guard let region = self.rangingQueue.first else {
+      dlog("[INFO] Cancel to stop ranging because region is nil")
       return
     }
+    
+    self.isRanging = false
+    self.rangingQueue.remove(at: 0)
     self.locationManager.stopRangingBeacons(in: region)
-    dlog("Stop ranging for region: \(region)")
+    
+    dlog("[INFO] Stop ranging for region: \(region)")
+    
+    //consume ranging queue
+    if let range = self.rangingQueue.first, self.rangingQueue.count != 0 {
+      dlog("[INFO] Consuming ranging queue for \(range)")
+      self.startRanging()
+    }
   }
 
   // MARK: - Location Manager Delegate methods
-  
-  func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
-    dlog("Location state: \(state.rawValue) for region: \(region)")
-  }
   
   func locationManager(
     _ manager: CLLocationManager,
@@ -97,11 +118,11 @@ final class RangingService: UIViewController, CLLocationManagerDelegate {
       }
     }
 
-    if rangedBeacon != nil {
-      dlog("did range beacon: \(rangedBeacon!), for region: \(region)")
-      self.delegate?.didRangeBeacon(rangedBeacon!, forRegion: region)
+    if let rBeacon = rangedBeacon {
+      dlog("[INFO] did range beacon: \(rBeacon), for region: \(region)")
+      self.delegate?.didRangeBeacon(rBeacon, forRegion: region)
     } else {
-      dlog("did fail range beacon for region: \(region)")
+      dlog("[INFO] did fail range beacon for region: \(region)")
       self.delegate?.didFailRangeBeacon(forRegion: region)
     }
   }
@@ -110,7 +131,8 @@ final class RangingService: UIViewController, CLLocationManagerDelegate {
     _ manager: CLLocationManager,
     rangingBeaconsDidFailFor region: CLBeaconRegion,
     withError error: Error) {
-    dlog("did fail range beacon for region: \(region), with error: \(error)")
+    dlog("[INFO] did fail range beacon for region: \(region), with error: \(error)")
+    self.isRanging = false
     self.delegate?.didFailRangeBeacon(forRegion: region)
   }
 }

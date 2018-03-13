@@ -61,6 +61,10 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
 
   // MARK: - MonitoringServiceDelegate methods
 
+  func didChangeState(_ region: CLBeaconRegion) {
+    self.startRanging()
+  }
+  
   func didEnterRegion(_ region: CLBeaconRegion) {
     self.startRanging()
   }
@@ -69,7 +73,7 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
     let uuid = region.proximityUUID.uuidString
     let values = PrefStore.get(uuid: uuid)
     guard values.count == 2 else { return }
-    
+
     PrefStore.clear(uuid: uuid)
     
     let (major, minor) = (values[0], values[1])

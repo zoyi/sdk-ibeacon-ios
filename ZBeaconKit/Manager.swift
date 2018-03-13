@@ -13,11 +13,9 @@ import AdSupport
 
 func dlog<T>( _ object:  @autoclosure () -> T) {
   guard Manager.debugMode else { return }
-  let message = "[ZBeaconKit]: \(object())\n\n"
+  let message = "[ZBeaconKit] \(Date()): \(object())\n\n"
   print(message, terminator: "")
-  DispatchQueue.main.async {
-    debugDelegate?.debug(with: message)
-  }
+  debugDelegate?.debug(with: message)
 }
 
 enum IBeaconRegionEvent: String {
@@ -33,7 +31,12 @@ enum IBeaconRegionEvent: String {
 /** debugging purpose **/
 public protocol DebugDelegate: class {
   func debug(with message: String)
+  func sent(with data: [String: Any])
+  func enter(to region: CLRegion)
+  func exit(from region: CLRegion)
+  func state(region: CLBeaconRegion, state: CLRegionState)
 }
+
 public var debugDelegate: DebugDelegate? = nil
 
 @objc
@@ -108,7 +111,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     self.stop()
 
     if Manager.customerId == nil {
-      dlog("you should set customer id")
+      dlog("[ERR] you should set customer id")
     }
 
     self.retryCount = 0
@@ -148,12 +151,12 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       manager.startMonitoring()
       self.monitoringManagers.append(manager)
     }
-    dlog("All start monitoring \(self.monitoringManagers.count)")
+    dlog("[INFO] All start monitoring \(self.monitoringManagers.count)")
   }
 
   func fetchPackageVersion() {
     do {
-      dlog("Try to fetch package version")
+      dlog("[INFO] Try to fetch package version")
 
       let opt = try HTTP.GET(
         self.packageVersionEndpoint,
@@ -163,7 +166,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
       opt.start({ [weak self] response in
         if response.error != nil {
-          dlog("Did fetch package version with ERROR: \(response.error!)")
+          dlog("[ERR] Did fetch package version with ERROR: \(response.error!)")
           self?.startRetryTimer()
         } else {
 
@@ -172,7 +175,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
             let ibeaconPlugins = result["ibeacon_plugins"],
             let newestVersion = ibeaconPlugins["newest_version"] as? String,
             let minimumVersion = ibeaconPlugins["minimum_version"] as? String {
-            dlog("Did fetch package version with response: \(result)")
+            dlog("[INFO] Did fetch package version with response: \(result)")
 
             // get current version
             let cv = Manager.currentPackageVersion
@@ -181,24 +184,24 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
               // current version is newer than or equal to minimum version
               if cv.compare(newestVersion, options: .numeric) == .orderedAscending {
                 // current version is older than newest version
-                dlog("Warning: Newest version \(newestVersion) is available")
+                dlog("[INFO] Warning: Newest version \(newestVersion) is available")
               }
               self?.fetchUUIDs()
             } else {
-              dlog("Error: Current version is not compatible. Need to upgrade to newest version: \(newestVersion)")
+              dlog("[ERR] Current version is not compatible. Need to upgrade to newest version: \(newestVersion)")
             }
           }
         }
       })
     } catch {
-      dlog("Error on request to fetch package version")
+      dlog("[ERR] Error on request to fetch package version")
       self.startRetryTimer()
     }
   }
 
   @objc func fetchUUIDs() {
     do {
-      dlog("Try to fetch uuids")
+      dlog("[INFO] Try to fetch uuids")
 
       let opt = try HTTP.GET(
         self.uuidEndpoint,
@@ -208,14 +211,14 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
       opt.start({ [weak self] response in
         if response.error != nil {
-          dlog("Did fetch uuids with ERROR: \(response.error!)")
+          dlog("[ERR] Did fetch uuids with ERROR: \(response.error!)")
           self?.startRetryTimer()
         } else {
 
           if let json = try? JSONSerialization.jsonObject(with: response.data, options: []),
              let result = json as? [String: AnyObject],
              let ibeacons = result["square_ibeacons"] as? [AnyObject] {
-            dlog("Did fetch uuids with response: \(ibeacons)")
+            dlog("[INFO] Did fetch uuids with response: \(ibeacons)")
 
             self?.retryCount = 0
 
@@ -235,14 +238,14 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
         }
       })
     } catch {
-      dlog("Error on request to fetch uuids: \(error)")
+      dlog("[ERR] Error on request to fetch uuids: \(error)")
       self.startRetryTimer()
     }
   }
 
   fileprivate func startRetryTimer() {
     if self.retryCount < self.maxRetryCount {
-      dlog("Set timer to retry fetch")
+      dlog("[INFO] Set timer to retry fetch")
       self.retryCount = self.retryCount + 1
 
       DispatchQueue.main.async {
@@ -271,7 +274,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     major: Int,
     minor: Int) {
     guard let customerId = Manager.customerId else {
-      dlog("Did not send event because no customer id")
+      dlog("[ERR] Did not send event because no customer id")
       return
     }
     let params: [String: Any] = [
@@ -293,24 +296,25 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     ]
 
     do {
-      dlog("Try to send event with params: \(params)")
+      dlog("[REQ] Try to send event with params: \(params)")
       let opt = try HTTP.POST(self.dataEndpoint,
                               parameters: params,
                               requestSerializer: JSONParameterSerializer())
       opt.start({ response in
         if response.error != nil {
-          dlog("Did send event with ERROR: \(response.error!)")
+          dlog("[ERR] Did send event with ERROR: \(response.error!)")
           if response.statusCode == 426 {
-            dlog("UnsupportedSDKVersionError: stop monitoring")
+            dlog("[ERR] UnsupportedSDKVersionError: stop monitoring")
             self.stop()
           }
         } else {
-          dlog("Did send event to zoyi server response: \(response.data)")
+          debugDelegate?.sent(with: params)
+          dlog("[RES] Did send event to zoyi server response: \(response.data)")
         }
 
       })
     } catch {
-      dlog("Error on create a new event request: \(error)")
+      dlog("[ERR] Error on create a new event request: \(error)")
     }
   }
 }
