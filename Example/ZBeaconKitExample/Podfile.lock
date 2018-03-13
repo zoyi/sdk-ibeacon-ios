@@ -1,5 +1,5 @@
 PODS:
-  - ZBeaconKit (1.1.0)
+  - ZBeaconKit (1.1.1)
 
 DEPENDENCIES:
   - ZBeaconKit (from `../..`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: ../..
 
 SPEC CHECKSUMS:
-  ZBeaconKit: ea54087e95ac6f27aeb6b143adc9c4fc46e379b2
+  ZBeaconKit: 28f669560041cafae2e558bbffad5011c5e1ff4c
 
-PODFILE CHECKSUM: f0ee5e0198bae539f4928cc515a4804e9d01f319
+PODFILE CHECKSUM: 5d66248abd112a0505390492b4e82fb1241473b0
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.4.0.beta.2

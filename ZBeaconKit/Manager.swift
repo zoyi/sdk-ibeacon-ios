@@ -11,7 +11,7 @@ import UIKit
 import CoreLocation
 import AdSupport
 
-func dlog<T>( _ object:  @autoclosure () -> T) {
+func dlog<T>( _ object:  @autoclosure () -> T, color: UIColor = UIColor.black) {
   guard Manager.debugMode else { return }
   let message = "[ZBeaconKit] \(Date()): \(object())\n\n"
   print(message, terminator: "")
@@ -31,10 +31,16 @@ enum IBeaconRegionEvent: String {
 /** debugging purpose **/
 public protocol DebugDelegate: class {
   func debug(with message: String)
-  func sent(with data: [String: Any])
-  func enter(to region: CLRegion)
-  func exit(from region: CLRegion)
-  func state(region: CLBeaconRegion, state: CLRegionState)
+  func debug(with message: String, color: UIColor)
+  func receive(with event: ZBeaconEvent)
+}
+
+public enum ZBeaconEvent {
+  case error(data: [String: Any], event: String)
+  case sent(data: [String: Any], event: String)
+  case enter(region: CLBeaconRegion)
+  case exit(region: CLBeaconRegion)
+  case state(region: CLBeaconRegion, state: CLRegionState)
 }
 
 public var debugDelegate: DebugDelegate? = nil
@@ -152,6 +158,7 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       self.monitoringManagers.append(manager)
     }
     dlog("[INFO] All start monitoring \(self.monitoringManagers.count)")
+    debugDelegate?.debug(with: "Start monitoring for\n\t\(Manager.uuids.joined(separator: "\n\t"))\n\n", color: UIColor.black)
   }
 
   func fetchPackageVersion() {
@@ -296,25 +303,28 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
     ]
 
     do {
-      dlog("[REQ] Try to send event with params: \(params)")
+      dlog("[REQ] Try to send event with params: \(params)\n")
       let opt = try HTTP.POST(self.dataEndpoint,
                               parameters: params,
                               requestSerializer: JSONParameterSerializer())
       opt.start({ response in
         if response.error != nil {
           dlog("[ERR] Did send event with ERROR: \(response.error!)")
+          debugDelegate?.receive(with: .error(data: params, event: type.rawValue))
           if response.statusCode == 426 {
             dlog("[ERR] UnsupportedSDKVersionError: stop monitoring")
+            debugDelegate?.receive(with: .error(data: params, event: type.rawValue))
             self.stop()
           }
         } else {
-          debugDelegate?.sent(with: params)
-          dlog("[RES] Did send event to zoyi server response: \(response.data)")
+          debugDelegate?.receive(with: .sent(data: params, event: type.rawValue))
+          dlog("[RES] Did send event to zoyi server response: \(response.data)\n")
         }
 
       })
     } catch {
       dlog("[ERR] Error on create a new event request: \(error)")
+      debugDelegate?.receive(with: .error(data: params, event: type.rawValue))
     }
   }
 }

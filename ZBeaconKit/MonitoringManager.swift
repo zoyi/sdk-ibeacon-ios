@@ -61,8 +61,12 @@ class MonitoringManager: RangingServiceDelegate, MonitoringServiceDelegate {
 
   // MARK: - MonitoringServiceDelegate methods
 
-  func didChangeState(_ region: CLBeaconRegion) {
-    self.startRanging()
+  func didChangeState(_ region: CLBeaconRegion, state: CLRegionState) {
+    if state == .inside {
+      self.didEnterRegion(region)
+    } else if state == .outside {
+      self.didExitRegion(region)
+    }
   }
   
   func didEnterRegion(_ region: CLBeaconRegion) {

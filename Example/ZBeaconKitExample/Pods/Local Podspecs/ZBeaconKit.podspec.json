@@ -1,6 +1,6 @@
 {
   "name": "ZBeaconKit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "summary": "ZBeaconKit written by ZOYI",
   "description": "ZBeaconKit O2O SDK by ZOYI",
   "homepage": "https://github.com/zoyi/sdk-ibeacon-ios",
@@ -16,7 +16,7 @@
   },
   "source": {
     "git": "https://github.com/zoyi/sdk-ibeacon-ios.git",
-    "tag": "1.1.0"
+    "tag": "1.1.1"
   },
   "source_files": "ZBeaconKit/",
   "frameworks": "CoreLocation",

@@ -12,7 +12,7 @@ import CoreLocation
 protocol MonitoringServiceDelegate: class {
   func didEnterRegion(_ region: CLBeaconRegion)
   func didExitRegion(_ region: CLBeaconRegion)
-  func didChangeState(_ region: CLBeaconRegion)
+  func didChangeState(_ region: CLBeaconRegion, state: CLRegionState)
 }
 
 final class MonitoringService: UIViewController, CLLocationManagerDelegate {
@@ -119,8 +119,8 @@ final class MonitoringService: UIViewController, CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
     if let beaconRegion = region as? CLBeaconRegion {
       dlog("[INFO] Detect state \(state.rawValue) for region (\(beaconRegion)")
-      self.delegate?.didChangeState(beaconRegion)
-      debugDelegate?.state(region: beaconRegion, state: state)
+      self.delegate?.didChangeState(beaconRegion, state: state)
+      debugDelegate?.receive(with: .state(region: beaconRegion, state: state))
     }
   }
 
@@ -129,7 +129,7 @@ final class MonitoringService: UIViewController, CLLocationManagerDelegate {
     if let beaconRegion = region as? CLBeaconRegion {
       dlog("[INFO] Did enter monitoring for region: \(beaconRegion)")
       self.delegate?.didEnterRegion(beaconRegion)
-      debugDelegate?.enter(to: region)
+      debugDelegate?.receive(with: .enter(region: beaconRegion))
 
     }
   }
@@ -139,7 +139,7 @@ final class MonitoringService: UIViewController, CLLocationManagerDelegate {
     if let beaconRegion = region as? CLBeaconRegion {
       dlog("[INFO] Did exit monitoring for region: \(beaconRegion)")
       self.delegate?.didExitRegion(beaconRegion)
-      debugDelegate?.exit(from: region)
+      debugDelegate?.receive(with: .exit(region: beaconRegion))
     }
   }
 }
