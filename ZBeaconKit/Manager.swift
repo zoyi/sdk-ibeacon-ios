@@ -284,10 +284,9 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       dlog("[ERR] Did not send event because no customer id")
       return
     }
-    let params: [String: Any] = [
+    var params: [String: Any] = [
       "package_id": Manager.packageId ?? "",
       "customer_id" : customerId,
-      "ad_id": Manager.advId ?? "",
       "event": type.rawValue,
 
       "ibeacon_uuid": uuid,
@@ -301,6 +300,10 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
 
       "sdk_version": Manager.currentPackageVersion
     ]
+    
+    if let advId = Manager.advId, advId != "" {
+      params["ad_id"] = advId
+    }
 
     do {
       dlog("[REQ] Try to send event with params: \(params)\n")
