@@ -9,7 +9,20 @@
 
 ### Adding `Location Always Usage` permission.
 
-Add `NSLocationAlwaysUsageDescription` key into your project `info.plist`.
+Add `NSLocationAlwaysUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription`, `NSLocationWhenInUseUsageDescription` keys into your project `info.plist`. </br>
+
+> you can change messages.
+
+```xml
+   <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+   <string>Will you allow this app to always know your location?</string>
+
+   <key>NSLocationAlwaysUsageDescription</key>
+   <string>Will you allow this app to always know your location?</string>
+
+   <key>NSLocationWhenInUseUsageDescription</key>
+   <string>Do you allow this app to know your current location?</string>  
+```
 
 ![](http://s3.ap-northeast-2.amazonaws.com/zoyi-github-assets/wiki/ZBeacon/add-location-always-usage-permission.png)
 
