@@ -9,7 +9,14 @@
 
 ### Adding `Location Always Usage` permission.
 
-Add `NSLocationAlwaysUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription`, `NSLocationWhenInUseUsageDescription` keys into your project `info.plist`. </br>
+Add `NSLocationAlwaysUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription`, `NSLocationWhenInUseUsageDescription` keys into your project `info.plist`. [more informations](https://developer.apple.com/documentation/corelocation/choosing_the_authorization_level_for_location_services/requesting_always_authorization) </br>
+
+
+- for ios < 11
+  - `NSLocationAlwaysUsageDescription`
+- for ios >= 11 
+  - `NSLocationAlwaysAndWhenInUseUsageDescription`
+  - `NSLocationWhenInUseUsageDescription` 
 
 > you can change messages.
 
