@@ -53,7 +53,11 @@ final class RangingService: UIViewController, CLLocationManagerDelegate {
   convenience init() {
     self.init(nibName: nil, bundle: nil)
     if #available(iOS 9.0, *){
-      self.locationManager.allowsBackgroundLocationUpdates = true
+      if let modes = Bundle.main.infoDictionary?["UIBackgroundModes"] as? [String], modes.contains("location") {
+        self.locationManager.allowsBackgroundLocationUpdates = true
+      } else {
+        dlog("[WARNING] Background location is missing in info.plist")
+      }
     }
   }
 
