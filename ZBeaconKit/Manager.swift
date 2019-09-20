@@ -284,11 +284,17 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       dlog("[ERR] Did not send event because no customer id")
       return
     }
+    
+    guard let advId = Manager.advId, advId != "" else {
+      dlog("[ERR] Could not send signal due to missing advertise id")
+      return
+    }
+    
     var params: [String: Any] = [
       "package_id": Manager.packageId ?? "",
       "customer_id" : customerId,
       "event": type.rawValue,
-
+      "ad_id": advId,
       "ibeacon_uuid": uuid,
       "major": major,
       "minor": minor,
@@ -301,10 +307,6 @@ public final class Manager: NSObject, MonitoringManagerDelegate {
       "sdk_version": Manager.currentPackageVersion
     ]
     
-    if let advId = Manager.advId, advId != "" {
-      params["ad_id"] = advId
-    }
-
     do {
       dlog("[REQ] Try to send event with params: \(params)\n")
       let opt = try HTTP.POST(self.dataEndpoint,
